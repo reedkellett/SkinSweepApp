@@ -2,7 +2,8 @@
 import React, { useState } from 'react';
 // import LinearGradient from 'react-native-linear-gradient';
 import { StyleSheet } from 'react-native';
-import { View, Text, TouchableOpacity, TextInput } from 'react-native'
+import { View, Text, TouchableOpacity, TextInput, Image} from 'react-native'
+import logo from '../assets/images/logo.png'
 
 export default function Login() {
     const [username, setUsername] = useState('');
@@ -10,7 +11,7 @@ export default function Login() {
 
     return (
         <View style={ styles.container }>
-            <Text style={ styles.title }>SkinSweep</Text>
+            <Image source={logo} style={styles.logo}/>
             <TextInput
                 style={styles.input}
                 placeholder="Username"
@@ -43,6 +44,11 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center',
       backgroundColor: '#F08585'
+    },
+    logo: {
+        width: '80%',
+        height: '10%',
+        marginBottom: '30%'
     },
     title: {
       fontSize: 20,
