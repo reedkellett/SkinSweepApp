@@ -2,40 +2,26 @@
 import React, { useState, useReducer } from 'react';
 // import LinearGradient from 'react-native-linear-gradient';
 import { StyleSheet } from 'react-native';
-import { View, Text, TouchableOpacity, TextInput, Image} from 'react-native'
+import { View, Text, TouchableOpacity, TextInput} from 'react-native'
 import { actionCreators, initialState, reducer } from '../reducers/login'
-import logo from '../assets/images/logo.png'
+import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { StackActions } from '@react-navigation/native';
-import { loginApi } from '../api/login';
-import ErrorText from '../components/text/errorText';
 
 export default function Login() {
     const navigation = useNavigation()
     const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loginState, dispatch] = useReducer(reducer, initialState)
 
-    const login = async() => {
-        dispatch(actionCreators.loading());
-        try {
-            await loginApi(username,password);
-            navigation.dispatch(StackActions.push('Root', {user: username}));
-          } catch (e) {
-            console.log('error')
-            dispatch(actionCreators.failure());
-          }
+    const signup = async(username: String, password: String) => {
+       
     }
-
-    const createAccount = () => {
-        const pushAction = StackActions.push('SignUp');
-        navigation.dispatch(pushAction);
-    }
+    
 
     return (
         <View style={ styles.container }>
-            <Image source={logo} style={styles.logo}/>
-            { loginState.error && <ErrorText message="Login Failed, Please Try Again"/>}
             <TextInput
                 style={styles.input}
                 placeholder="Username"
@@ -44,20 +30,23 @@ export default function Login() {
             />
             <TextInput
                 style={styles.input}
+                placeholder="Email"
+                placeholderTextColor="#003f5c"
+                onChangeText={(email) => setEmail(email)}
+            />
+            <TextInput
+                style={styles.input}
                 placeholder="Password"
                 placeholderTextColor="#003f5c"
                 secureTextEntry={true}
                 onChangeText={(password) => setPassword(password)}
             />
-            <TouchableOpacity style={styles.logIn} onPress={() => login()}>
-                { loginState.loading ? <Text>...</Text>: <Text>Log In</Text> }
+            <TouchableOpacity style={styles.logIn} onPress={() => console.log('login ' + username + ' ' + password)}>
+                { loginState.loading ? <Text>...</Text>: <Text>Sign Up</Text> }
             </TouchableOpacity>
-            <View style={styles.bottomContainer}> 
-                <Text style={styles.bottomText}> Don't have an account?</Text>
-                <TouchableOpacity onPress={() => createAccount()}>
-                    <Text style={styles.create}> Create One </Text>
-                </TouchableOpacity>
-            </View>
+            <TouchableOpacity style={styles.back} onPress={() => navigation.dispatch(StackActions.pop(1))}>
+                <AntDesign name="left" size={24} color="black" />
+            </TouchableOpacity>
         </View>
     )
 }
@@ -104,11 +93,14 @@ const styles = StyleSheet.create({
         fontFamily: 'Monospace',
         fontSize: 12,
     },
-    create: {
-        fontFamily: 'Monospace',
-        fontSize: 12,
-        color: '#7884F8',
-        fontWeight: 'bold',
-        textDecorationLine: 'underline'
+    back: {
+        marginTop: '10%',
+        backgroundColor: '#FFFFFF',
+        opacity: 0.5,
+        borderRadius: 100,
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: 50,
+        height: 50
     }
   });
