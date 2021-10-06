@@ -3,25 +3,38 @@ import React, { useState, useReducer } from 'react';
 // import LinearGradient from 'react-native-linear-gradient';
 import { StyleSheet } from 'react-native';
 import { View, Text, TouchableOpacity, TextInput} from 'react-native'
-import { actionCreators, initialState, reducer } from '../reducers/login'
+import { actionCreators, reducer } from '../reducers/login'
 import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { StackActions } from '@react-navigation/native';
+import { signupAPI } from '../api/auth';
 
-export default function Login() {
+export default function SignUp() {
     const navigation = useNavigation()
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [loginState, dispatch] = useReducer(reducer, initialState)
+    const [password2, setPassword2] = useState('');
+    // const [state, dispatch] = useReducer(reducer,)
 
-    const signup = async(username: String, password: String) => {
-       
+    const signup = async(username: String, password: String, email: String) => {
+        // if(password != password2){
+        //     dispatch(actionCreators.formError("passwords do not match"))
+        // }
+        // dispatch(actionCreators.loading());
+        // try {
+        //     await signupAPI(username,password,email);
+        //     navigation.dispatch(StackActions.push('Root', {user: username}));
+        //   } catch (e) {
+        //     console.log('error')
+        //     dispatch(actionCreators.failure());
+        //   }
     }
     
 
     return (
         <View style={ styles.container }>
+            <Text style={styles.title}>Create Account</Text>
             <TextInput
                 style={styles.input}
                 placeholder="Username"
@@ -41,8 +54,16 @@ export default function Login() {
                 secureTextEntry={true}
                 onChangeText={(password) => setPassword(password)}
             />
-            <TouchableOpacity style={styles.logIn} onPress={() => console.log('login ' + username + ' ' + password)}>
-                { loginState.loading ? <Text>...</Text>: <Text>Sign Up</Text> }
+             <TextInput
+                style={styles.input}
+                placeholder="Confirm Password"
+                placeholderTextColor="#003f5c"
+                secureTextEntry={true}
+                onChangeText={(password2) => setPassword2(password2)}
+            />
+            <TouchableOpacity style={styles.logIn} onPress={() => signup(username, password, email)}>
+                {/* { state.loading ? <Text>...</Text>:  */}
+                <Text style={{color: '#fff', fontWeight: 'bold'}}>Sign Up</Text> 
             </TouchableOpacity>
             <TouchableOpacity style={styles.back} onPress={() => navigation.dispatch(StackActions.pop(1))}>
                 <AntDesign name="left" size={24} color="black" />

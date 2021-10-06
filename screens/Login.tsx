@@ -7,19 +7,19 @@ import { actionCreators, initialState, reducer } from '../reducers/login'
 import logo from '../assets/images/logo.png'
 import { useNavigation } from '@react-navigation/native';
 import { StackActions } from '@react-navigation/native';
-import { loginApi } from '../api/login';
+import { loginAPI } from '../api/auth';
 import ErrorText from '../components/text/errorText';
 
 export default function Login() {
     const navigation = useNavigation()
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [loginState, dispatch] = useReducer(reducer, initialState)
+    const [state, dispatch] = useReducer(reducer, initialState)
 
     const login = async() => {
         dispatch(actionCreators.loading());
         try {
-            await loginApi(username,password);
+            await loginAPI(username,password);
             navigation.dispatch(StackActions.push('Root', {user: username}));
           } catch (e) {
             console.log('error')
@@ -35,7 +35,7 @@ export default function Login() {
     return (
         <View style={ styles.container }>
             <Image source={logo} style={styles.logo}/>
-            { loginState.error && <ErrorText message="Login Failed, Please Try Again"/>}
+            { state.error && <ErrorText message="Login Failed, Please Try Again"/>}
             <TextInput
                 style={styles.input}
                 placeholder="Username"
@@ -50,7 +50,8 @@ export default function Login() {
                 onChangeText={(password) => setPassword(password)}
             />
             <TouchableOpacity style={styles.logIn} onPress={() => login()}>
-                { loginState.loading ? <Text>...</Text>: <Text>Log In</Text> }
+                { state.loading ? <Text>...</Text>: 
+                <Text style={{color: '#fff', fontWeight: 'bold'}}>Log In</Text> }
             </TouchableOpacity>
             <View style={styles.bottomContainer}> 
                 <Text style={styles.bottomText}> Don't have an account?</Text>
@@ -86,7 +87,7 @@ const styles = StyleSheet.create({
         height: 45,
         marginBottom: 20,
         alignItems: "center",
-        padding: 20,
+        paddingLeft: 20,
     },
     logIn: {
         width: '30%',
@@ -101,12 +102,10 @@ const styles = StyleSheet.create({
         marginTop: '10%'
     },
     bottomText: {
-        fontFamily: 'Monospace',
-        fontSize: 12,
+        fontSize: 14,
     },
     create: {
-        fontFamily: 'Monospace',
-        fontSize: 12,
+        fontSize: 14,
         color: '#7884F8',
         fontWeight: 'bold',
         textDecorationLine: 'underline'
