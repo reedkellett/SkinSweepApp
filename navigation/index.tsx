@@ -27,6 +27,8 @@ import {
   RootTabScreenProps,
 } from "../types";
 import LinkingConfiguration from "./LinkingConfiguration";
+import SignUp from "../screens/SignUp";
+import Login from "../screens/Login";
 
 export default function Navigation({
   colorScheme,
@@ -51,7 +53,12 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{ headerShown: false }}
+      initialRouteName="Login"
+    >
+      <Stack.Screen name="Login" component={Login} />
+      <Stack.Screen name="SignUp" component={SignUp} />
       <Stack.Screen
         name="Root"
         component={BottomTabNavigator}
@@ -83,6 +90,7 @@ function BottomTabNavigator() {
       initialRouteName="Dashboard"
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
+        //headerShown: false,
       }}
     >
       <BottomTab.Screen
