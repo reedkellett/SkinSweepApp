@@ -3,6 +3,7 @@ import { FlatList, StyleSheet } from "react-native";
 
 import { Text, View } from "../components/Themed";
 import { RootTabScreenProps } from "../types";
+import FolderPreview from "../components/FolderPreview";
 
 const dataSource = [
   { key: "1", text: "Entry 1" },
@@ -28,8 +29,9 @@ export default function DashboardScreen({
         darkColor="rgba(255,255,255,0.1)"
       />
       <FlatList
+        style={{}}
         data={dataSource}
-        renderItem={({ item }) => <Text>{item.text}</Text>}
+        renderItem={({ item }) => <FolderPreview></FolderPreview>}
         numColumns={3}
       />
     </View>
