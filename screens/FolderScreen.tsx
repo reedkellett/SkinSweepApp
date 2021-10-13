@@ -1,5 +1,6 @@
 import * as React from "react";
 import { FlatList, StyleSheet } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 import { Text, View } from "../components/Themed";
 
@@ -14,11 +15,13 @@ const entryListData = [
 
 export default function FolderScreen() {
   return (
-    <View style={{ flexDirection: "column", alignItems: "center" }}>
-      <FlatList
-        data={entryListData}
-        renderItem={({ item }) => <Text>{`${item.key}: ${item.value}`}</Text>}
-      />
-    </View>
+    <SafeAreaView>
+      <View style={{ flexDirection: "column", alignItems: "center" }}>
+        <FlatList
+          data={entryListData}
+          renderItem={({ item }) => <Text>{`${item.key}: ${item.value}`}</Text>}
+        />
+      </View>
+    </SafeAreaView>
   );
 }

@@ -1,9 +1,10 @@
 import * as React from "react";
-import { FlatList, StyleSheet } from "react-native";
+import { FlatList, StyleSheet, Pressable } from "react-native";
 
 import { Text, View } from "../components/Themed";
 import { RootTabScreenProps } from "../types";
 import FolderPreview from "../components/FolderPreview";
+import { useNavigation } from "@react-navigation/native";
 
 const dataSource = [
   { key: "1", text: "Entry 1" },
@@ -17,9 +18,9 @@ const dataSource = [
   { key: "9", text: "Entry 9" },
 ];
 
-export default function DashboardScreen({
-  navigation,
-}: RootTabScreenProps<"Dashboard">) {
+export default function DashboardScreen({}: RootTabScreenProps<"Dashboard">) {
+  const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Overview Information</Text>

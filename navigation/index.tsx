@@ -12,7 +12,7 @@ import {
 } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as React from "react";
-import { ColorSchemeName, Pressable } from "react-native";
+import { ColorSchemeName } from "react-native";
 
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
@@ -29,6 +29,7 @@ import {
 import LinkingConfiguration from "./LinkingConfiguration";
 import SignUp from "../screens/SignUp";
 import Login from "../screens/Login";
+import FolderScreen from "../screens/FolderScreen";
 
 export default function Navigation({
   colorScheme,
@@ -64,6 +65,7 @@ function RootNavigator() {
         component={BottomTabNavigator}
         options={{ headerShown: false }}
       />
+      <Stack.Screen name="Folder" component={FolderScreen} />
       <Stack.Screen
         name="NotFound"
         component={NotFoundScreen}
@@ -96,24 +98,9 @@ function BottomTabNavigator() {
       <BottomTab.Screen
         name="Dashboard"
         component={DashboardScreen}
-        options={({ navigation }: RootTabScreenProps<"Dashboard">) => ({
+        options={({}: RootTabScreenProps<"Dashboard">) => ({
           title: "Dashboard",
           tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
-          headerRight: () => (
-            <Pressable
-              onPress={() => navigation.navigate("Modal")}
-              style={({ pressed }) => ({
-                opacity: pressed ? 0.5 : 1,
-              })}
-            >
-              <FontAwesome
-                name="info-circle"
-                size={25}
-                color={Colors[colorScheme].text}
-                style={{ marginRight: 15 }}
-              />
-            </Pressable>
-          ),
         })}
       />
       <BottomTab.Screen
