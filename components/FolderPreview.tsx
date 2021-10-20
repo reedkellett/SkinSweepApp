@@ -1,12 +1,15 @@
 import React from "react";
 import { View, Image, Text, TouchableHighlight } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { StackActions } from "@react-navigation/native";
 
 const folderName = "Left Elbow Mole";
 const priority = 1;
 
 export default function FolderPreview() {
+  const navigation = useNavigation();
   const openFolder = () => {
-    console.log("open Folder pressed");
+    navigation.dispatch(StackActions.push("Folder"));
   };
 
   return (
