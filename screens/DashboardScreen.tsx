@@ -31,7 +31,7 @@ export default function DashboardScreen({
       <FlatList
         style={{}}
         data={dataSource}
-        renderItem={({ item }) => <FolderPreview></FolderPreview>}
+        renderItem={({ item }) => <FolderPreview id={item.key}></FolderPreview>}
         numColumns={3}
       />
     </View>
