@@ -150,7 +150,7 @@ const pickerSelectStyles = StyleSheet.create({
   inputIOS: {
     color: "black",
   },
-  inputAndriod: {
+  inputAndroid: {
     color: "black",
   },
 });
@@ -159,7 +159,7 @@ const pickerSelectStylesEditMode = StyleSheet.create({
   inputIOS: {
     color: "blue",
   },
-  inputAndriod: {
+  inputAndroid: {
     color: "blue",
   },
 });
