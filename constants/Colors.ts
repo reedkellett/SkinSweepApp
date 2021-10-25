@@ -17,5 +17,8 @@ export default {
     tabIconSelected: tintColorDark,
   },
   lightPurple: '#E8EAFE',
-  white: '#FFF'
+  red: '#FF0000',
+  black: '#000000',
+  white: '#FFF',
+  gray: '#a9a9a9'
 };

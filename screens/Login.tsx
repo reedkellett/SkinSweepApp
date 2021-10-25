@@ -12,15 +12,15 @@ import ErrorText from '../components/text/errorText';
 
 export default function Login() {
     const navigation = useNavigation()
-    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [state, dispatch] = useReducer(reducer, initialState)
 
     const login = async() => {
         dispatch(actionCreators.loading());
         try {
-            await loginAPI(username,password);
-            navigation.dispatch(StackActions.push('Root', {user: username}));
+            const response = await loginAPI(email,password);
+            navigation.dispatch(StackActions.push('Root', {user: response.id}));
           } catch (e) {
             console.log('error')
             dispatch(actionCreators.failure());
@@ -38,9 +38,9 @@ export default function Login() {
             { state.error && <ErrorText message="Login Failed, Please Try Again"/>}
             <TextInput
                 style={styles.input}
-                placeholder="Username"
+                placeholder="Email"
                 placeholderTextColor="#003f5c"
-                onChangeText={(username) => setUsername(username)}
+                onChangeText={(email) => setEmail(email)}
             />
             <TextInput
                 style={styles.input}
