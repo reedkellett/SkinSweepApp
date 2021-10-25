@@ -29,6 +29,7 @@ import {
 import LinkingConfiguration from "./LinkingConfiguration";
 import SignUp from "../screens/SignUp";
 import Login from "../screens/Login";
+import EntryScreen from "../screens/EntryScreen";
 
 export default function Navigation({
   colorScheme,
@@ -69,6 +70,7 @@ function RootNavigator() {
         component={NotFoundScreen}
         options={{ title: "Oops!" }}
       />
+      <Stack.Screen name="EntryScreen" component={EntryScreen} />
       <Stack.Group screenOptions={{ presentation: "modal" }}>
         <Stack.Screen name="Modal" component={ModalScreen} />
       </Stack.Group>
