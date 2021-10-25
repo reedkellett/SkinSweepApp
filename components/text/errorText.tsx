@@ -1,15 +1,17 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Text } from 'react-native'
 
 type props = {
-    message: string;
+    message: String;
 }
 
 export default function ErrorText({message} : props) {
     return (
+    <View style={styles.container}>
         <Text style={styles.error}>{message}</Text>
-    )
+    </View>
+    );
 }
 
 const styles = StyleSheet.create({
@@ -18,5 +20,9 @@ const styles = StyleSheet.create({
         fontFamily: 'Roboto',
         fontSize: 14,
         color: '#FF0000'
+    },
+    container: {
+        width: '70%',
+        textAlign: 'left'
     }
 });
