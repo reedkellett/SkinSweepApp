@@ -34,6 +34,13 @@ export type RootTabParamList = {
   Profile: undefined;
 };
 
+export enum Status {
+  UPDATED = 'Updated',
+  TREATED = 'Treated',
+  NEEDS_UPDATING = 'Needs Updating',
+  UPDATE_IMMEDIATELY = 'Update Immediately'
+}
+
 export type RootTabScreenProps<Screen extends keyof RootTabParamList> =
   CompositeScreenProps<
     BottomTabScreenProps<RootTabParamList, Screen>,

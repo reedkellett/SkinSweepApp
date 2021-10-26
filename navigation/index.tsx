@@ -31,15 +31,10 @@ import SignUp from "../screens/SignUp";
 import Login from "../screens/Login";
 import EntryScreen from "../screens/EntryScreen";
 
-export default function Navigation({
-  colorScheme,
-}: {
-  colorScheme: ColorSchemeName;
-}) {
+export default function Navigation() {
   return (
     <NavigationContainer
       linking={LinkingConfiguration}
-      theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
     >
       <RootNavigator />
     </NavigationContainer>
@@ -85,15 +80,10 @@ function RootNavigator() {
 const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
 function BottomTabNavigator() {
-  const colorScheme = useColorScheme();
-
+ 
   return (
     <BottomTab.Navigator
       initialRouteName="Dashboard"
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme].tint,
-        //headerShown: false,
-      }}
     >
       <BottomTab.Screen
         name="Dashboard"
@@ -111,7 +101,6 @@ function BottomTabNavigator() {
               <FontAwesome
                 name="info-circle"
                 size={25}
-                color={Colors[colorScheme].text}
                 style={{ marginRight: 15 }}
               />
             </Pressable>

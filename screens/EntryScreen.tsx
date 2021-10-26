@@ -23,8 +23,8 @@ export default function EntryScreen() {
             <View style={styles.horizontal}>
                <Image style={styles.img} source={{uri: 'https://health.clevelandclinic.org/wp-content/uploads/sites/3/2021/04/moleSkinCancer-1150885505-770x533-1.jpg'}}/>
                <View style={{flex: 1, flexDirection: 'column', marginLeft: 25}}>
-                <TextInput style={styles.input} value={entryData.name} />
-                <TextInput style={styles.input} value={entryData.date} editable={false} />
+                <Text style={styles.top}> { entryData.name}  </Text>
+                <Text style={styles.top}>{entryData.date} </Text>
                </View>
             </View>
             <View style={styles.horizontal}>
@@ -42,9 +42,8 @@ const styles = StyleSheet.create({
       flexDirection: 'column',
       justifyContent: 'flex-start',
       backgroundColor: Colors.lightPurple,
-      border: 'solid 1px blue'
     },
-    input: {
+    top: {
         backgroundColor: Colors.white,
         borderRadius: 15,
         height: 40,
@@ -58,7 +57,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: '100%',
         height: '30%',
-        border: 'solid 1px red'
     },
     img: {
         height: '50%',
