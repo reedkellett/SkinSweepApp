@@ -30,6 +30,7 @@ import LinkingConfiguration from "./LinkingConfiguration";
 import SignUp from "../screens/SignUp";
 import Login from "../screens/Login";
 import EntryScreen from "../screens/EntryScreen";
+import { auth } from "../firebase/firebaseSetUp";
 
 export default function Navigation({
   colorScheme,
@@ -53,24 +54,37 @@ export default function Navigation({
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
+  const [signedIn, setSignedIn] = React.useState(false);
+
+  auth.onAuthStateChanged((user) => {
+    if (user) {
+      setSignedIn(true);
+    } else {
+      setSignedIn(false);
+    }
+  });
+
   return (
     <Stack.Navigator
       screenOptions={{ headerShown: false }}
-      initialRouteName="Login"
+      //initialRouteName="Login"
     >
-      <Stack.Screen name="Login" component={Login} />
+      {signedIn ? (
+        <Stack.Screen
+          name="Root"
+          component={BottomTabNavigator}
+          options={{ headerShown: false }}
+        />
+      ) : (
+        <Stack.Screen name="Login" component={Login} />
+      )}
       <Stack.Screen name="SignUp" component={SignUp} />
-      <Stack.Screen
-        name="Root"
-        component={BottomTabNavigator}
-        options={{ headerShown: false }}
-      />
+      <Stack.Screen name="EntryScreen" component={EntryScreen} />
       <Stack.Screen
         name="NotFound"
         component={NotFoundScreen}
         options={{ title: "Oops!" }}
       />
-      <Stack.Screen name="EntryScreen" component={EntryScreen} />
       <Stack.Group screenOptions={{ presentation: "modal" }}>
         <Stack.Screen name="Modal" component={ModalScreen} />
       </Stack.Group>
