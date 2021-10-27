@@ -1,18 +1,21 @@
 import * as WebBrowser from "expo-web-browser";
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { RNCamera } from "react-native-camera";
-import Colors from "../constants/Colors";
-import { MonoText } from "./StyledText";
 import { Text, View } from "./Themed";
 
 export default function CameraView(camera: RNCamera) {
+  const [img, setImg] = useState([undefined, ""]);
+
   async function takePicture() {
     if (camera) {
       const options = { quality: 0.5, base64: true };
       const data = await camera.takePictureAsync(options);
+      setImg([data.base64, data.uri]);
     }
   }
+
+  function processPhoto() {}
   return (
     <View>
       <RNCamera
@@ -38,12 +41,6 @@ export default function CameraView(camera: RNCamera) {
         </TouchableOpacity>
       </View>
     </View>
-  );
-}
-
-function handleHelpPress() {
-  WebBrowser.openBrowserAsync(
-    "https://docs.expo.io/get-started/create-a-new-app/#opening-the-app-on-your-phonetablet"
   );
 }
 
