@@ -47,7 +47,7 @@ export default function SignUp() {
     return (
         <View style={ styles.container }>
             <Text style={styles.title}>Create Account</Text>
-            { state.errorMsg  && <ErrorText message={state.errorMsg}/>}
+            { state.errorMsg && state.errorMsg.length > 0  && <ErrorText message={state.errorMsg}/>}
             <TextInput
                 style={styles.input}
                 placeholder="Email"

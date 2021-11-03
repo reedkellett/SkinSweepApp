@@ -5,6 +5,7 @@ import Colors from '../constants/Colors';
 import { View, Text, TouchableOpacity, TextInput, Image} from 'react-native'
 import { StyleSheet } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
+import { BackNavBar } from '../components/BackNavBar';
 
 const entryData = {
     name: 'moley',
@@ -17,9 +18,7 @@ export default function EntryScreen() {
     const navigation = useNavigation()
     return (
         <View style={styles.container}>
-            <TouchableOpacity style={styles.back} onPress={() => navigation.dispatch(StackActions.pop(1))}>
-                <AntDesign name="left" size={24} color="black" />
-            </TouchableOpacity>
+            <BackNavBar />
             <View style={styles.horizontal}>
                <Image style={styles.img} source={{uri: 'https://health.clevelandclinic.org/wp-content/uploads/sites/3/2021/04/moleSkinCancer-1150885505-770x533-1.jpg'}}/>
                <View style={{flex: 1, flexDirection: 'column', marginLeft: 25}}>
@@ -83,15 +82,5 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         height: '30%',
         backgroundColor: Colors.white,
-    },
-    back: {
-        marginTop: '10%',
-        backgroundColor: '#FFFFFF',
-        opacity: 0.5,
-        borderRadius: 100,
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: 50,
-        height: 50
     }
 });

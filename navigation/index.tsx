@@ -30,6 +30,7 @@ import LinkingConfiguration from "./LinkingConfiguration";
 import SignUp from "../screens/SignUp";
 import Login from "../screens/Login";
 import EntryScreen from "../screens/EntryScreen";
+import FolderScreen from "../screens/FolderScreen";
 
 export default function Navigation() {
   return (
@@ -66,6 +67,7 @@ function RootNavigator() {
         options={{ title: "Oops!" }}
       />
       <Stack.Screen name="EntryScreen" component={EntryScreen} />
+      <Stack.Screen name="FolderScreen" component={FolderScreen} />
       <Stack.Group screenOptions={{ presentation: "modal" }}>
         <Stack.Screen name="Modal" component={ModalScreen} />
       </Stack.Group>

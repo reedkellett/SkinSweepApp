@@ -19,7 +19,7 @@ export default function FolderPreview(props: FolderProps) {
   const navigation = useNavigation()
   const openFolder = () => {
     console.log("open Folder pressed");
-    navigation.dispatch(StackActions.push('EntryScreen', {entryId: props.id}));
+    navigation.dispatch(StackActions.push('FolderScreen', {folderId: props.id}));
   };
 
   return (
