@@ -22,12 +22,16 @@ export default function DashboardScreen({
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Photo Log</Text>
-      <FlatList
-        style={styles.list}
-        data={dataSource}
-        renderItem={({ item }) => 
-          <FolderPreview id={ item.id } title={item.title} imgUrl={item.imgUrl} status={item.status} />}
-      />
+      <View style={styles.box}>
+        <FlatList
+          style={styles.list}
+          data={dataSource}
+          renderItem={({ item }) => 
+            <FolderPreview id={ item.id } title={item.title} imgUrl={item.imgUrl} status={item.status} />}
+        />
+      </View>
+      <Text style={styles.header}>Resources</Text>
+      <View style={styles.box2}> </View>
     </View>
   );
 }
@@ -44,7 +48,25 @@ const styles = StyleSheet.create({
   }, 
   header: {
     fontSize: 20,
+    marginTop: 20,
+    marginBottom: 10,
     color: Colors.black,
     fontWeight: "bold",
   },
+  box: {
+    width: '95%',
+    height: '60%',
+    backgroundColor: Colors.white,
+    borderRadius: 15,
+    paddingTop: 15,
+    justifyContent: 'center'
+  },
+  box2: {
+    width: '95%',
+    height: '20%',
+    backgroundColor: Colors.white,
+    borderRadius: 15,
+    paddingTop: 15,
+    justifyContent: 'center'
+  }
 });

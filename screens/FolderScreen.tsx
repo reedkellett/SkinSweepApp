@@ -8,9 +8,9 @@ import Colors from "../constants/Colors";
 
 // get folderId from navigation props, and get all entries
 const entryListData = [
-  { key: '0', value: "Entry 1", date: '5/12/2021', imgUrl: 'https://health.clevelandclinic.org/wp-content/uploads/sites/3/2021/04/moleSkinCancer-1150885505-770x533-1.jpg' },
-  { key: '1', value: "Entry 2", date: '3/18/2021', imgUrl: ''},
-  { key: '2', value: "Entry 3", date: '2/12/2021', imgUrl: ''},
+  { key: '0', value: "Entry 1", date: '5/12/2021', diagnosis: 'safe', imgUrl: 'https://health.clevelandclinic.org/wp-content/uploads/sites/3/2021/04/moleSkinCancer-1150885505-770x533-1.jpg'},
+  { key: '1', value: "Entry 2", date: '3/18/2021', diagnosis: 'bad'},
+  { key: '2', value: "Entry 3", date: '2/12/2021', diagnosis: 'unsure'},
 ];
 
 export default function FolderScreen() {
@@ -23,11 +23,17 @@ export default function FolderScreen() {
           source={{uri: mostRecentImageUrl}}
         />
       <Text style={styles.title}> Entries </Text>
-      <FlatList
-        style={styles.list}
-        data={entryListData}
-        renderItem={({ item }) => <EntryPreview id={item.key} date={item.date} classification={''}/>}
-      />
+      <View style={styles.box}>
+        <View style={styles.header}>
+          <Text style={{color: Colors.black, fontSize: 16}}>Date</Text>
+          <Text style={{color: Colors.black, fontSize: 16}}>Diagnosis</Text>
+        </View>
+        <FlatList
+          style={styles.list}
+          data={entryListData}
+          renderItem={({ item }) => <EntryPreview id={item.key} date={item.date} diagnosis={item.diagnosis}/>}
+        />
+      </View>
     </View>
   );
 }
@@ -46,12 +52,30 @@ const styles = StyleSheet.create({
     height: 200
   },
   list: {
-    marginTop: 20,
     width: '100%'
   },
   title: {
     color: Colors.black,
+    fontWeight: 'bold',
     fontSize: 20,
-    marginTop: 15
+    marginTop: 15,
+    marginBottom: 10
+  },
+  box: {
+    width: '95%',
+    height: '50%',
+    backgroundColor: Colors.white,
+    borderRadius: 15,
+    paddingTop: 10,
+    justifyContent: 'center'
+  },
+  header: {
+    width: '100%',
+    borderBottomWidth: 1,
+    borderColor: Colors.gray,
+    backgroundColor: Colors.white,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginBottom: 10
   }
 });

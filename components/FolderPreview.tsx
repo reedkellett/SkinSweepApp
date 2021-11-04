@@ -1,3 +1,4 @@
+import { AntDesign } from "@expo/vector-icons";
 import { StackActions, useNavigation } from "@react-navigation/native";
 import React from "react";
 import { View, Image, Text, StyleSheet } from "react-native";
@@ -30,6 +31,7 @@ export default function FolderPreview(props: FolderProps) {
           source={{uri: props.imgUrl}}
         />
          <Text style={styles.title}>{props.title}</Text>
+         <AntDesign style={styles.arrow} name="arrowright" size={18} color="gray" />
       </View>
     </TouchableOpacity>
   );
@@ -39,23 +41,26 @@ const styles = StyleSheet.create({
   container: {
     display: 'flex',
     flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
     width: '90%',
     marginLeft: '5%',
     marginBottom: 10,
-    borderRadius: 5,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: Colors.gray,
     backgroundColor: Colors.white,
   },
   img: {
     height: 80,
     width: 80,
-    marginLeft: 10,
-    borderRadius: 5,
+    borderRadius: 10,
   },
   title: {
-    width:'50%',
     fontSize: 20,
-    marginLeft: 10
-
+  },
+  arrow: {
+    marginRight: 5,
+    opacity: 0.7,
   }
 });
