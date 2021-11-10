@@ -2,9 +2,11 @@ import * as React from "react";
 import { FlatList, StyleSheet, Image } from "react-native";
 import { BackNavBar } from "../components/BackNavBar";
 import EntryPreview from "../components/EntryPreview";
+import HeaderText from "../components/text/headerText";
 
 import { Text, View } from "../components/Themed";
 import Colors from "../constants/Colors";
+import { navRoute } from "../types";
 
 // get folderId from navigation props, and get all entries
 const entryListData = [
@@ -13,8 +15,8 @@ const entryListData = [
   { key: '2', value: "Entry 3", date: '2/12/2021', diagnosis: 'unsure'},
 ];
 
-export default function FolderScreen() {
-  const mostRecentImageUrl = entryListData[0].imgUrl;
+export default function FolderScreen({route} : any) {
+  const mostRecentImageUrl = route.params.imgUrl;
   return (
     <View style={styles.container}>
       <BackNavBar/>
@@ -22,7 +24,7 @@ export default function FolderScreen() {
           style={styles.img}
           source={{uri: mostRecentImageUrl}}
         />
-      <Text style={styles.title}> Entries </Text>
+      <HeaderText style={styles.title} message={'Entries'}/>
       <View style={styles.box}>
         <View style={styles.header}>
           <Text style={{color: Colors.black, fontSize: 16}}>Date</Text>
@@ -55,11 +57,8 @@ const styles = StyleSheet.create({
     width: '100%'
   },
   title: {
-    color: Colors.black,
-    fontWeight: 'bold',
-    fontSize: 20,
     marginTop: 15,
-    marginBottom: 10
+    marginBottom: 10,
   },
   box: {
     width: '95%',

@@ -20,7 +20,7 @@ export default function FolderPreview(props: FolderProps) {
   const navigation = useNavigation()
   const openFolder = () => {
     console.log("open Folder pressed");
-    navigation.dispatch(StackActions.push('FolderScreen', {folderId: props.id}));
+    navigation.dispatch(StackActions.push('FolderScreen', {folderId: props.id, imgUrl: props.imgUrl}));
   };
 
   return (
@@ -54,7 +54,8 @@ const styles = StyleSheet.create({
   img: {
     height: 80,
     width: 80,
-    borderRadius: 10,
+    borderTopLeftRadius: 10,
+    borderBottomLeftRadius: 10,
   },
   title: {
     fontSize: 20,
