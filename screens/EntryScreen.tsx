@@ -40,7 +40,7 @@ export default function EntryScreen() {
                 </View>
             <View style={styles.horizontal}></View>
         </View>
-    );
+  );
 }
 
 const styles = StyleSheet.create({

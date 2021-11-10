@@ -42,7 +42,9 @@ export default function DashboardScreen({
             style={styles.list}
             data={resources}
             renderItem={({ item }) =>
-              <TouchableOpacity style={ styles.resourceButton} onPress={ () => Linking.openURL(item.link)}><Text style={styles.resource}>{item.title}</Text> </TouchableOpacity>}
+              <TouchableOpacity onPress={ () => Linking.openURL(item.link)}>
+                <Text style={styles.resource}>{item.title}</Text> 
+              </TouchableOpacity>}
           />
       </View>
     </View>
@@ -80,8 +82,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   resourceButton: {
-    height: 20,
     borderWidth: 1,
+    borderColor: Colors.gray,
     borderRadius: 10,
   },
   resource: {
