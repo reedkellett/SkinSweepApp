@@ -6,7 +6,6 @@ export const register = (email: string, password: string, fullName: string) => {
     .then((response) => {
       const uid = response.user?.uid;
       const data = {
-        id: uid,
         email: email,
         fullName: fullName,
       };
