@@ -31,12 +31,11 @@ import SignUp from "../screens/SignUp";
 import Login from "../screens/Login";
 import EntryScreen from "../screens/EntryScreen";
 import FolderScreen from "../screens/FolderScreen";
+import { auth } from "../firebase/firebaseSetUp";
 
 export default function Navigation() {
   return (
-    <NavigationContainer
-      linking={LinkingConfiguration}
-    >
+    <NavigationContainer linking={LinkingConfiguration}>
       <RootNavigator />
     </NavigationContainer>
   );
@@ -49,18 +48,31 @@ export default function Navigation() {
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
+  const [signedIn, setSignedIn] = React.useState(false);
+
+  auth.onAuthStateChanged((user) => {
+    if (user) {
+      setSignedIn(true);
+    } else {
+      setSignedIn(false);
+    }
+  });
+
   return (
     <Stack.Navigator
       screenOptions={{ headerShown: false }}
-      initialRouteName="Login"
+      //initialRouteName="Login"
     >
-      <Stack.Screen name="Login" component={Login} />
+      {signedIn ? (
+        <Stack.Screen
+          name="Root"
+          component={BottomTabNavigator}
+          options={{ headerShown: false }}
+        />
+      ) : (
+        <Stack.Screen name="Login" component={Login} />
+      )}
       <Stack.Screen name="SignUp" component={SignUp} />
-      <Stack.Screen
-        name="Root"
-        component={BottomTabNavigator}
-        options={{ headerShown: false }}
-      />
       <Stack.Screen
         name="NotFound"
         component={NotFoundScreen}
@@ -79,17 +91,14 @@ function RootNavigator() {
 const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
 function BottomTabNavigator() {
- 
   return (
-    <BottomTab.Navigator
-      initialRouteName="Dashboard"
-    >
+    <BottomTab.Navigator initialRouteName="Dashboard">
       <BottomTab.Screen
         name="Dashboard"
         component={DashboardScreen}
         options={({ navigation }: RootTabScreenProps<"Dashboard">) => ({
           title: "Dashboard",
-          tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />
+          tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
         })}
       />
       <BottomTab.Screen
