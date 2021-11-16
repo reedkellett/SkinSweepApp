@@ -1,43 +1,68 @@
-import React, { useState, useReducer } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, Image, TextInput, Button } from "react-native";
 import RNPickerSelect from "react-native-picker-select";
 
 import { Text, View } from "../components/Themed";
 
-const nameBE = "Reed Kellett ";
-const emailBE = "reed.kellett@gmail.com";
-const heightBE = "70";
-const weightBE = "160";
-const sexBE = "male";
-const DOBBE = "1999-06-12";
-const fitzTypeBE = "IV";
+import { profileInfo } from "../model/profileInfo";
+import { setUserInfo } from "../firebase/profile";
+import { auth, firestore } from "../firebase/firebaseSetUp";
+
+const usersRef = firestore.collection("users");
 
 export default function ProfileScreen() {
-  const [name, setName] = useState(nameBE);
-  const [email, setEmail] = useState(emailBE);
-  const [height, setHeight] = useState(heightBE);
-  const [weight, setWeight] = useState(weightBE);
-  const [sex, setSex] = useState(sexBE);
-  const [fitzType, setFitzType] = useState(fitzTypeBE);
-  const [DOB, setDOB] = useState(DOBBE);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [height, setHeight] = useState("");
+  const [weight, setWeight] = useState("");
+  const [sex, setSex] = useState("");
+  const [fitzType, setFitzType] = useState("");
+  const [DOB, setDOB] = useState("");
   const [editMode, setEditMode] = useState(false);
 
-  // const cancel = () => {
-  //   setEditMode(false);
-  //   console.log("cancel");
-  // };
+  useEffect(() => {
+    let currentUser = auth.currentUser;
+    if (currentUser) {
+      usersRef
+        .doc(currentUser.uid)
+        .get()
+        .then((document) => {
+          const userData = document.data();
+          if (userData) {
+            setName(userData.fullName);
+            setEmail(userData.email);
+            setHeight(userData.height || null);
+            setWeight(userData.weight || null);
+            setSex(userData.sex || null);
+            setFitzType(userData.fitzType || null);
+            setDOB(userData.DOB || null);
+          }
+        })
+        .catch((error) => alert(error));
+    }
+  }, []);
+
   const edit = () => {
     setEditMode(true);
   };
   const done = () => {
-    // send updated info to BE
+    let newUserData: profileInfo = {
+      fullName: name,
+      email: email,
+      height: height,
+      weight: weight,
+      sex: sex,
+      fitzType: fitzType,
+      DOB: DOB,
+    };
+    console.log(newUserData);
+    setUserInfo(newUserData);
     setEditMode(false);
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.buttonsContainer}>
-        {/* <Button onPress={cancel} title="Cancel" disabled={!editMode} /> */}
         <Button
           onPress={editMode ? done : edit}
           title={editMode ? "Done" : "Edit"}
@@ -76,6 +101,7 @@ export default function ProfileScreen() {
             onChangeText={(height) => setHeight(height)}
             value={height}
             editable={editMode}
+            placeholder={"Not Set"}
           />
         </View>
 
@@ -90,6 +116,7 @@ export default function ProfileScreen() {
             onChangeText={(weight) => setWeight(weight)}
             value={weight}
             editable={editMode}
+            placeholder={"Not Set"}
           />
         </View>
 
@@ -120,6 +147,7 @@ export default function ProfileScreen() {
             onChangeText={(DOB) => setDOB(DOB)}
             value={DOB}
             editable={editMode}
+            placeholder={"Not Set"}
           />
         </View>
 
