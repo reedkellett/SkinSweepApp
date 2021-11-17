@@ -7,6 +7,9 @@ import FolderPreview from "../components/FolderPreview";
 import Colors from "../constants/Colors";
 import HeaderText from "../components/text/headerText";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { auth } from "../firebase/firebaseSetUp";
+import { useEffect } from "react";
+import { getPhotolog } from "../firebase/dashboard";
 
 const dataSource = [
   {
@@ -53,9 +56,13 @@ const resources = [
   },
 ];
 
-export default function DashboardScreen({
-  navigation,
-}: RootTabScreenProps<"Dashboard">) {
+export default function DashboardScreen() {
+
+  useEffect(() => {
+      let test = getPhotolog();
+      console.log(test)
+  }, []);
+  
   return (
     <View style={styles.container}>
       <HeaderText style={styles.header} message={"Photo Log"} />

@@ -1676,9 +1676,9 @@
   integrity sha512-0yPjzuzGMkW1GkrC8yWsiN7vt1OzkMIi9HgxRmKREZl2wnNPOKo/yScTjXf/O57HM8dltqxPF6jlNLFVtc2qdw==
 
 "@grpc/grpc-js@^1.0.0":
-  version "1.4.1"
-  resolved "https://registry.yarnpkg.com/@grpc/grpc-js/-/grpc-js-1.4.1.tgz#799063a4ff7395987d4fceb2aab133629b003840"
-  integrity sha512-/chkA48TdAvATHA7RXJPeHQLdfFhpu51974s8htjO/XTDHA41j5+SkR5Io+lr9XsLmkZD6HxLyRAFGmA9wjO2w==
+  version "1.4.4"
+  resolved "https://registry.yarnpkg.com/@grpc/grpc-js/-/grpc-js-1.4.4.tgz#59336f13d77bc446bbdf2161564a32639288dc5b"
+  integrity sha512-a6222b7Dl6fIlMgzVl7e+NiRoLiZFbpcwvBH2Oli56Bn7W4/3Ld+86hK4ffPn5rx2DlDidmIcvIJiOQXyhv9gA==
   dependencies:
     "@grpc/proto-loader" "^0.6.4"
     "@types/node" ">=12.12.47"
@@ -1692,9 +1692,9 @@
     protobufjs "^6.8.6"
 
 "@grpc/proto-loader@^0.6.4":
-  version "0.6.6"
-  resolved "https://registry.yarnpkg.com/@grpc/proto-loader/-/proto-loader-0.6.6.tgz#d8e51ea808ec5fa54d9defbecbf859336fb2da71"
-  integrity sha512-cdMaPZ8AiFz6ua6PUbP+LKbhwJbFXnrQ/mlnKGUyzDUZ3wp7vPLksnmLCBX6SHgSmjX7CbNVNLFYD5GmmjO4GQ==
+  version "0.6.7"
+  resolved "https://registry.yarnpkg.com/@grpc/proto-loader/-/proto-loader-0.6.7.tgz#e62a202f4cf5897bdd0e244dec1dbc80d84bdfa1"
+  integrity sha512-QzTPIyJxU0u+r2qGe8VMl3j/W2ryhEvBv7hc42OjYfthSj370fUrb7na65rG6w3YLZS/fb8p89iTBobfWGDgdw==
   dependencies:
     "@types/long" "^4.0.1"
     lodash.camelcase "^4.3.0"
@@ -2623,9 +2623,9 @@
   integrity sha512-YHUZhBOMTM3mjFkXVcK+WwAcYmyhe1wL4lfqNtzI0b3qAy7yuSetnM7QJazgE5PFmgVTNGiLOgRFfJMqW7XpSQ==
 
 "@types/node@>=12.12.47", "@types/node@>=13.7.0":
-  version "16.11.6"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-16.11.6.tgz#6bef7a2a0ad684cf6e90fcfe31cecabd9ce0a3ae"
-  integrity sha512-ua7PgUoeQFjmWPcoo9khiPum3Pd60k4/2ZGXt18sm2Slk0W0xZTqt5Y0Ny1NyBiN1EVQ/+FaF9NcY4Qe6rwk5w==
+  version "16.11.7"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-16.11.7.tgz#36820945061326978c42a01e56b61cd223dfdc42"
+  integrity sha512-QB5D2sqfSjCmTuWcBWyJ+/44bcjO7VbjSbOE0ucoVbAsSNQc4Lt6QkgkVXkTDwkL4z/beecZNDvVX15D4P8Jbw==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.1"

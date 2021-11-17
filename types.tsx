@@ -26,6 +26,10 @@ export type RootStackParamList = {
   FolderScreen: undefined;
 };
 
+export type navRoute = {
+  params : any;
+}
+
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
   NativeStackScreenProps<RootStackParamList, Screen>;
 
