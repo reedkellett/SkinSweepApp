@@ -39,6 +39,13 @@ export type RootTabParamList = {
   Profile: undefined;
 };
 
+export type PhotoLogEntry = {
+  id: string,
+  imgUrl: string;
+  name: string;
+  status: Status;
+};
+
 export enum Status {
   UPDATED = 'Updated',
   TREATED = 'Treated',

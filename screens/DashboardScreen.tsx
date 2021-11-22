@@ -2,7 +2,7 @@ import * as React from "react";
 import { FlatList, StyleSheet, Linking } from "react-native";
 
 import { Text, View } from "../components/Themed";
-import { RootTabScreenProps, Status } from "../types";
+import { PhotoLogEntry, RootTabScreenProps, Status } from "../types";
 import FolderPreview from "../components/FolderPreview";
 import Colors from "../constants/Colors";
 import HeaderText from "../components/text/headerText";
@@ -10,6 +10,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { auth } from "../firebase/firebaseSetUp";
 import { useEffect } from "react";
 import { getPhotolog } from "../firebase/dashboard";
+import { useState } from "react";
 
 const dataSource = [
   {
@@ -57,10 +58,10 @@ const resources = [
 ];
 
 export default function DashboardScreen() {
+  const [photoLog, setPhotoLog] = useState<PhotoLogEntry[]>([]);
 
   useEffect(() => {
-      let test = getPhotolog();
-      console.log(test)
+      getPhotolog().then(data => setPhotoLog(data));
   }, []);
   
   return (
@@ -69,11 +70,12 @@ export default function DashboardScreen() {
       <View style={styles.box}>
         <FlatList
           style={styles.list}
-          data={dataSource}
+          data={photoLog}
           renderItem={({ item }) => (
             <FolderPreview
+              key={item.id}
               id={item.id}
-              title={item.title}
+              title={item.name}
               imgUrl={item.imgUrl}
               status={item.status}
             />

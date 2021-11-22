@@ -36,3 +36,12 @@ export const logout = () => {
   });
   console.log(auth.currentUser?.uid);
 };
+
+export const getUserId = () => {
+  let currentUser = auth.currentUser;
+  if (currentUser) {
+    return currentUser.uid
+  } else {
+    return null;
+  }
+}
