@@ -8,23 +8,38 @@ import Colors from "../constants/Colors";
 type EntryProps = {
     id: string;
     date: string;
+    name: string,
+    status: string;
     diagnosis: string;
+    confidence: number;
+    notes: string;
+    imgUrl: string;
   }
 
 export default function EntryPreview(props : EntryProps) {
     const navigation = useNavigation()
     const openEntry = () => {
-        navigation.dispatch(StackActions.push('EntryScreen', {entryId: props.id}));
+        navigation.dispatch(StackActions.push('EntryScreen', 
+        {id: props.id,
+            date: props.date,
+            name: props.name,
+            diagnosis: props.diagnosis,
+            confidence: props.confidence,
+            notes: props.notes,
+            imgUrl: props.imgUrl
+        }));
     }
 
-    function handleDiagnosisColor(diagnosis: String){
-        switch(diagnosis) {
+    function handleDiagnosisColor(status: String){
+        switch(status.toLowerCase()) {
             case 'safe':
                 return Colors.green;
             case 'unsure':
                 return Colors.yellow;
             case 'bad': 
                 return Colors.red;
+            default: 
+                return Colors.black;
         }
     }
     return (
@@ -32,8 +47,8 @@ export default function EntryPreview(props : EntryProps) {
             <View style={styles.container} >
                 <Text style={{marginLeft: 15}}>{props.date}</Text>
                 <View style={{flexDirection: 'row'}}>
-                <Text style={{color: handleDiagnosisColor(props.diagnosis), fontWeight: 'bold', marginRight: 20}}>
-                    {props.diagnosis}
+                <Text style={{color: handleDiagnosisColor(props.status), fontWeight: 'bold', marginRight: 20}}>
+                    {props.status}
                 </Text>
                 <AntDesign style={styles.arrow} name="arrowright" size={18} color="gray" />
                 </View>

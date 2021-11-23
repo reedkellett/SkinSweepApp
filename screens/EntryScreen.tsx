@@ -5,38 +5,33 @@ import { StyleSheet } from 'react-native';
 import { BackNavBar } from '../components/BackNavBar';
 import HeaderText from '../components/text/headerText';
 
-const entryData = {
-    name: 'moley',
-    date: '12/17/2020',
-    diagnosis: 'you are good',
-    confidence: '86%',
-    notes: 'test'
-}
-
-export default function EntryScreen() {
+export default function EntryScreen({route} : any) {
+    //get form feild values from previous screen
+    const values = route.params;
+    console.log('test', values)
     return (
         <View style={styles.container}>
             <BackNavBar />
             <View style={styles.horizontal}>
-               <Image style={styles.img} source={{uri: 'https://health.clevelandclinic.org/wp-content/uploads/sites/3/2021/04/moleSkinCancer-1150885505-770x533-1.jpg'}}/>
+               <Image style={styles.img} source={{uri: values.imgUrl}}/>
                <View style={{flex: 1, flexDirection: 'column', marginLeft: 25}}>
-                <Text style={styles.top}> { entryData.name}  </Text>
-                <Text style={styles.top}>{entryData.date} </Text>
+                <Text style={styles.top}> { values.name}  </Text>
+                <Text style={styles.top}>{ values.date} </Text>
                </View>
             </View>
             <View style={styles.info}>
                 <View style={styles.diagnosis}>
                     <HeaderText style={{paddingLeft: 10, marginBottom: 5}} message={'Diagnosis'} />
-                    <Text style={styles.diagnosisText}>{entryData.diagnosis}</Text>
+                    <Text style={styles.diagnosisText}>{values.diagnosis}</Text>
                 </View>
                 <View style={styles.confidence}>
                     <HeaderText  style={{paddingLeft: 8, marginBottom: 5}} message={'Confidence'} size={12} />
-                    <Text style={styles.confidenceText}>{entryData.confidence}</Text>
+                    <Text style={styles.confidenceText}>{values.confidence + "%"}</Text>
                 </View>
             </View>
             <View style={styles.notes}>
                     <HeaderText style={{paddingLeft: 10, marginBottom: 5}} message={'Additional Notes'} />
-                    <Text style={styles.diagnosisText}>{entryData.notes}</Text>
+                    <Text style={styles.diagnosisText}>{values.notes}</Text>
                 </View>
             <View style={styles.horizontal}></View>
         </View>

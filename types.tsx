@@ -43,14 +43,17 @@ export type PhotoLogEntry = {
   id: string,
   imgUrl: string;
   name: string;
-  status: Status;
 };
 
-export enum Status {
-  UPDATED = 'Updated',
-  TREATED = 'Treated',
-  NEEDS_UPDATING = 'Needs Updating',
-  UPDATE_IMMEDIATELY = 'Update Immediately'
+export type Entry = {
+  id: string,
+  date: string,
+  imgUrl: string,
+  status: string,
+  name: string,
+  notes: string,
+  diagnosis: string,
+  confidence: number
 }
 
 export type RootTabScreenProps<Screen extends keyof RootTabParamList> =
