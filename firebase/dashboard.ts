@@ -1,4 +1,4 @@
-import { Entry, PhotoLogEntry } from "../types";
+import { Entry, PhotoLogEntry, Resource } from "../types";
 import { getUserId } from "./auth";
 import { auth, firestore  } from "./firebaseSetUp";
 
@@ -56,4 +56,30 @@ export const getPhotolog = async():Promise<PhotoLogEntry[]> => {
         return null;
     });
     return entries;
+  };
+
+  const resourcesRef = firestore.collection("resources");
+
+  export const getResources = async():Promise<Resource[]> => {
+    let resources: any[] = [];
+    await resourcesRef
+    .get()
+    .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+            // doc.data() is never undefined for query doc snapshots
+            console.log(doc.id, " => ", doc.data());
+            let resourceData: Resource = {
+                id: doc.id,
+                title: doc.data().title,
+                imgUrl: doc.data().imgUrl,
+                url: doc.data().url
+            }
+            resources.push(doc.data());
+        });
+    })
+    .catch((error) => {
+        console.log("Error getting documents: ", error);
+        return null;
+    });
+    return resources;
   };

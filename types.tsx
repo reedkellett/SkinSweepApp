@@ -56,6 +56,13 @@ export type Entry = {
   confidence: number
 }
 
+export type Resource = {
+  id: string,
+  title: string,
+  imgUrl: string,
+  url: string
+}
+
 export type RootTabScreenProps<Screen extends keyof RootTabParamList> =
   CompositeScreenProps<
     BottomTabScreenProps<RootTabParamList, Screen>,

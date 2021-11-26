@@ -1,15 +1,15 @@
 import * as React from "react";
-import { FlatList, StyleSheet, Linking } from "react-native";
+import { FlatList, StyleSheet, Linking, Image } from "react-native";
 
 import { Text, View } from "../components/Themed";
-import { PhotoLogEntry, RootTabScreenProps, Status } from "../types";
+import { PhotoLogEntry, Resource } from "../types";
 import FolderPreview from "../components/FolderPreview";
 import Colors from "../constants/Colors";
 import HeaderText from "../components/text/headerText";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { auth } from "../firebase/firebaseSetUp";
 import { useEffect } from "react";
-import { getPhotolog } from "../firebase/dashboard";
+import { getPhotolog, getResources } from "../firebase/dashboard";
 import { useState } from "react";
 
 const dataSource = [
@@ -45,18 +45,14 @@ const dataSource = [
   },
 ];
 
-const resources = [
-  {
-    title: "Cancer Statistics",
-    link: "https://www.cancer.org/cancer/melanoma-skin-cancer/about/key-statistics.html",
-  },
-];
 
 export default function DashboardScreen() {
   const [photoLog, setPhotoLog] = useState<PhotoLogEntry[]>([]);
+  const [resources, setResources] = useState<Resource[]>([]);
 
   useEffect(() => {
       getPhotolog().then(data => setPhotoLog(data));
+      getResources().then(data => setResources(data))
   }, []);
   
   return (
@@ -82,7 +78,8 @@ export default function DashboardScreen() {
           style={styles.list}
           data={resources}
           renderItem={({ item }) => (
-            <TouchableOpacity onPress={() => Linking.openURL(item.link)}>
+            <TouchableOpacity onPress={() => Linking.openURL(item.url)}>
+              <Image style={styles.img} source={{uri: item.imgUrl}}/>
               <Text style={styles.resource}>{item.title}</Text>
             </TouchableOpacity>
           )}
@@ -132,4 +129,7 @@ const styles = StyleSheet.create({
     color: Colors.black,
     fontSize: 18,
   },
+  img: {
+    height: 50
+  }
 });
