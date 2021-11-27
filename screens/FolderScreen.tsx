@@ -29,7 +29,7 @@ export default function FolderScreen({route} : any) {
       <View style={styles.box}>
         <View style={styles.header}>
           <Text style={{color: Colors.black, fontSize: 16}}>Date</Text>
-          <Text style={{color: Colors.black, fontSize: 16}}>Diagnosis</Text>
+          <Text style={{color: Colors.black, fontSize: 16}}>Status</Text>
         </View>
         <FlatList
           style={styles.list}

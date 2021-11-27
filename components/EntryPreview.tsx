@@ -48,7 +48,7 @@ export default function EntryPreview(props : EntryProps) {
                 <Text style={{marginLeft: 15}}>{props.date}</Text>
                 <View style={{flexDirection: 'row'}}>
                 <Text style={{color: handleDiagnosisColor(props.status), fontWeight: 'bold', marginRight: 20}}>
-                    {props.status}
+                    {props.status.toUpperCase()}
                 </Text>
                 <AntDesign style={styles.arrow} name="arrowright" size={18} color="gray" />
                 </View>
