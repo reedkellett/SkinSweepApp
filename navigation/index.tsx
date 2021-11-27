@@ -58,28 +58,26 @@ function RootNavigator() {
     }
   });
 
-  return (
+  return signedIn ? (
     <Stack.Navigator
       screenOptions={{ headerShown: false }}
-      //initialRouteName="Login"
+      initialRouteName="Root"
     >
-      {signedIn ? (
-        <Stack.Screen
-          name="Root"
-          component={BottomTabNavigator}
-          options={{ headerShown: false }}
-        />
-      ) : (
-        <Stack.Screen name="Login" component={Login} />
-      )}
-      <Stack.Screen name="SignUp" component={SignUp} />
       <Stack.Screen
-        name="NotFound"
-        component={NotFoundScreen}
-        options={{ title: "Oops!" }}
+        name="Root"
+        component={BottomTabNavigator}
+        options={{ headerShown: false }}
       />
       <Stack.Screen name="EntryScreen" component={EntryScreen} />
       <Stack.Screen name="FolderScreen" component={FolderScreen} />
+    </Stack.Navigator>
+  ) : (
+    <Stack.Navigator
+      screenOptions={{ headerShown: false }}
+      initialRouteName="Root"
+    >
+      <Stack.Screen name="Login" component={Login} />
+      <Stack.Screen name="SignUp" component={SignUp} />
     </Stack.Navigator>
   );
 }
