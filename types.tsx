@@ -26,6 +26,10 @@ export type RootStackParamList = {
   FolderScreen: undefined;
 };
 
+export type navRoute = {
+  params : any;
+}
+
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
   NativeStackScreenProps<RootStackParamList, Screen>;
 
@@ -35,11 +39,28 @@ export type RootTabParamList = {
   Profile: undefined;
 };
 
-export enum Status {
-  UPDATED = 'Updated',
-  TREATED = 'Treated',
-  NEEDS_UPDATING = 'Needs Updating',
-  UPDATE_IMMEDIATELY = 'Update Immediately'
+export type PhotoLogEntry = {
+  id: string,
+  imgUrl: string;
+  name: string;
+};
+
+export type Entry = {
+  id: string,
+  date: string,
+  imgUrl: string,
+  status: string,
+  name: string,
+  notes: string,
+  diagnosis: string,
+  confidence: number
+}
+
+export type Resource = {
+  id: string,
+  title: string,
+  imgUrl: string,
+  url: string
 }
 
 export type RootTabScreenProps<Screen extends keyof RootTabParamList> =

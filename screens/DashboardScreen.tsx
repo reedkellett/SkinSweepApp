@@ -1,74 +1,41 @@
 import * as React from "react";
-import { FlatList, StyleSheet, Linking } from "react-native";
+import { FlatList, StyleSheet, Linking, Image } from "react-native";
 
 import { Text, View } from "../components/Themed";
-import { RootTabScreenProps, Status } from "../types";
+import { PhotoLogEntry, Resource } from "../types";
 import FolderPreview from "../components/FolderPreview";
 import Colors from "../constants/Colors";
 import HeaderText from "../components/text/headerText";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { auth } from "../firebase/firebaseSetUp";
+import { useEffect } from "react";
+import { getPhotolog, getResources } from "../firebase/dashboard";
+import { useState } from "react";
+import { AntDesign } from "@expo/vector-icons";
 
-const dataSource = [
-  {
-    id: "1",
-    title: "left elbow mole",
-    imgUrl:
-      "https://health.clevelandclinic.org/wp-content/uploads/sites/3/2021/04/moleSkinCancer-1150885505-770x533-1.jpg",
-    status: Status.UPDATED,
-  },
-  {
-    id: "2",
-    title: "right hand rash",
-    imgUrl:
-      "https://images.everydayhealth.com/images/common-types-of-rashes-01-rm-1440x810.jpg",
-    status: Status.NEEDS_UPDATING,
-  },
-  {
-    id: "3",
-    title: "right arm mole",
-    imgUrl:
-      "https://www.aimatmelanoma.org/wp-content/uploads/Untitled-design-70-300x300.png",
-    status: Status.TREATED,
-  },
-  {
-    id: "4",
-    title: "neck bumb",
-    imgUrl:
-      "https://post.medicalnewstoday.com/wp-content/uploads/sites/3/2020/03/shutterstock_716416951_thumb-732x549.jpg",
-    status: Status.UPDATE_IMMEDIATELY,
-  },
-  {
-    id: "5",
-    title: "backne",
-    imgUrl:
-      "https://www.sanovadermatology.com/wp-content/uploads/2021/06/AdobeStock_285892730-scaled.jpeg",
-    status: Status.NEEDS_UPDATING,
-  },
-];
 
-const resources = [
-  {
-    title: "Cancer Statistics",
-    link: "https://www.cancer.org/cancer/melanoma-skin-cancer/about/key-statistics.html",
-  },
-];
+export default function DashboardScreen() {
+  const [photoLog, setPhotoLog] = useState<PhotoLogEntry[]>([]);
+  const [resources, setResources] = useState<Resource[]>([]);
 
-export default function DashboardScreen({
-  navigation,
-}: RootTabScreenProps<"Dashboard">) {
+  useEffect(() => {
+      getPhotolog().then(data => setPhotoLog(data));
+      getResources().then(data => setResources(data))
+  }, []);
+  
   return (
     <View style={styles.container}>
       <HeaderText style={styles.header} message={"Photo Log"} />
       <View style={styles.box}>
         <FlatList
           style={styles.list}
-          data={dataSource}
+          data={photoLog}
           renderItem={({ item }) => (
             <FolderPreview
+              key={item.id}
               id={item.id}
-              title={item.title}
+              title={item.name}
               imgUrl={item.imgUrl}
-              status={item.status}
             />
           )}
         />
@@ -79,8 +46,12 @@ export default function DashboardScreen({
           style={styles.list}
           data={resources}
           renderItem={({ item }) => (
-            <TouchableOpacity onPress={() => Linking.openURL(item.link)}>
-              <Text style={styles.resource}>{item.title}</Text>
+            <TouchableOpacity onPress={() => Linking.openURL(item.url)}>
+              <View style={styles.resourceContainer}>
+                <Image style={styles.img} source={{uri: item.imgUrl}}/>
+                <Text style={styles.resource}>{item.title}</Text>
+                <AntDesign style={styles.arrow} name="arrowright" size={18} color="gray" />
+              </View>
             </TouchableOpacity>
           )}
         />
@@ -105,7 +76,7 @@ const styles = StyleSheet.create({
   },
   box: {
     width: "95%",
-    height: "60%",
+    height: "55%",
     backgroundColor: Colors.white,
     borderRadius: 15,
     paddingTop: 15,
@@ -113,20 +84,37 @@ const styles = StyleSheet.create({
   },
   box2: {
     width: "95%",
-    height: "20%",
+    height: "25%",
     backgroundColor: Colors.white,
     borderRadius: 15,
     paddingTop: 15,
     justifyContent: "center",
   },
-  resourceButton: {
-    borderWidth: 1,
-    borderColor: Colors.gray,
-    borderRadius: 10,
-  },
   resource: {
-    justifyContent: "center",
     color: Colors.black,
     fontSize: 18,
   },
+  resourceContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    width: '90%',
+    marginLeft: '5%',
+    backgroundColor: Colors.white,
+    justifyContent: 'space-between',
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: Colors.gray,
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  img: {
+    width: '20%',
+    height: 50,
+    borderTopLeftRadius: 10,
+    borderBottomLeftRadius: 10,
+  },
+  arrow: {
+    marginRight: 5,
+    opacity: 0.7,
+  }
 });

@@ -1,4 +1,6 @@
 import * as React from "react";
+import { useEffect } from "react";
+import { useState } from "react";
 import { FlatList, StyleSheet, Image } from "react-native";
 import { BackNavBar } from "../components/BackNavBar";
 import EntryPreview from "../components/EntryPreview";
@@ -6,16 +8,15 @@ import HeaderText from "../components/text/headerText";
 
 import { Text, View } from "../components/Themed";
 import Colors from "../constants/Colors";
-import { navRoute } from "../types";
-
-// get folderId from navigation props, and get all entries
-const entryListData = [
-  { key: '0', value: "Entry 1", date: '5/12/2021', diagnosis: 'safe', imgUrl: 'https://health.clevelandclinic.org/wp-content/uploads/sites/3/2021/04/moleSkinCancer-1150885505-770x533-1.jpg'},
-  { key: '1', value: "Entry 2", date: '3/18/2021', diagnosis: 'bad'},
-  { key: '2', value: "Entry 3", date: '2/12/2021', diagnosis: 'unsure'},
-];
+import { getEntries } from "../firebase/dashboard";
 
 export default function FolderScreen({route} : any) {
+  const [entries, setEntries] = useState<any[]>([]);
+
+  useEffect(() => {
+    getEntries(route.params.logId).then(data => setEntries(data));
+  }, []);
+
   const mostRecentImageUrl = route.params.imgUrl;
   return (
     <View style={styles.container}>
@@ -28,12 +29,22 @@ export default function FolderScreen({route} : any) {
       <View style={styles.box}>
         <View style={styles.header}>
           <Text style={{color: Colors.black, fontSize: 16}}>Date</Text>
-          <Text style={{color: Colors.black, fontSize: 16}}>Diagnosis</Text>
+          <Text style={{color: Colors.black, fontSize: 16}}>Status</Text>
         </View>
         <FlatList
           style={styles.list}
-          data={entryListData}
-          renderItem={({ item }) => <EntryPreview id={item.key} date={item.date} diagnosis={item.diagnosis}/>}
+          data={entries}
+          renderItem={({ item }) => 
+          <EntryPreview 
+            key={item.id} 
+            id={item.id} 
+            date={item.date} 
+            name={item.name}
+            diagnosis={ item.diagnosis}
+            confidence={ item.confidence}
+            notes={item.notes}
+            imgUrl={item.imgUrl}
+            status={item.status}/>}
         />
       </View>
     </View>

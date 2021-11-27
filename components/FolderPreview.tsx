@@ -4,23 +4,18 @@ import React from "react";
 import { View, Image, Text, StyleSheet } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Colors from "../constants/Colors";
-import { Status } from "../types";
-
-const folderName = "Left Elbow Mole";
-const priority = 1;
 
 type FolderProps = {
   id: string;
   imgUrl: string;
   title: string;
-  status: Status
 }
 
 export default function FolderPreview(props: FolderProps) {
   const navigation = useNavigation()
   const openFolder = () => {
     console.log("open Folder pressed");
-    navigation.dispatch(StackActions.push('FolderScreen', {folderId: props.id, imgUrl: props.imgUrl}));
+    navigation.dispatch(StackActions.push('FolderScreen', {logId: props.id, imgUrl: props.imgUrl}));
   };
 
   return (
