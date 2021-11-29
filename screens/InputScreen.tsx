@@ -26,19 +26,21 @@ export default function InputScreen({route} : any) {
              <TextInput
                 style={styles.input}
                 onChangeText={onChangeLog}
-                placeholder={'Log Name'}
+                placeholder={'Log Name...'}
+                placeholderTextColor={Colors.gray}
                 value={logName}
                 />
              <TextInput
                 style={styles.input}
                 onChangeText={onChangeText}
-                placeholder={'Title'}
+                placeholder={'Title...'}
+                placeholderTextColor={Colors.gray}
                 value={titleText}
                 />
             <TextInput
-            style={styles.input}
+            style={styles.notes}
             onChangeText={onChangeNotes}
-            placeholder={'Notes'}
+            placeholder={'Notes...'}
             value={notes}
             />
             <View style={ styles.submit }>
@@ -68,6 +70,15 @@ const styles =  StyleSheet.create({
         borderRadius: 30,
         width: "70%",
         height: 45,
+        marginBottom: 20,
+        alignItems: "center",
+        paddingLeft: 20,
+      },
+    notes: {
+        backgroundColor: "#FFFFFF",
+        borderRadius: 30,
+        width: "70%",
+        height: 120,
         marginBottom: 20,
         alignItems: "center",
         paddingLeft: 20,
