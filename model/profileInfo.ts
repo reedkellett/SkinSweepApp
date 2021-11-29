@@ -6,4 +6,5 @@ export interface profileInfo {
   sex?: string;
   DOB?: string;
   fitzType?: string;
+  imageURL?: string;
 }

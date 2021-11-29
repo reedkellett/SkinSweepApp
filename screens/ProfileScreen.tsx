@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Image, TextInput, Button } from "react-native";
+import { StyleSheet, Image, TextInput, Button, Platform } from "react-native";
 import RNPickerSelect from "react-native-picker-select";
+import * as ImagePicker from "expo-image-picker";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 import { Text, View } from "../components/Themed";
 
@@ -21,6 +23,7 @@ export default function ProfileScreen() {
   const [fitzType, setFitzType] = useState("");
   const [DOB, setDOB] = useState("");
   const [editMode, setEditMode] = useState(false);
+  const [imageURL, setImageURL] = useState("");
 
   useEffect(() => {
     let currentUser = auth.currentUser;
@@ -38,10 +41,21 @@ export default function ProfileScreen() {
             setSex(userData.sex || null);
             setFitzType(userData.fitzType || null);
             setDOB(userData.DOB || null);
+            setImageURL(userData.imageURL || null);
           }
         })
         .catch((error) => alert(error));
     }
+
+    (async () => {
+      if (Platform.OS !== "web") {
+        const { status } =
+          await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status !== "granted") {
+          alert("Sorry, we need camera roll permissions to make this work!");
+        }
+      }
+    })();
   }, []);
 
   const signOut = () => {
@@ -60,10 +74,27 @@ export default function ProfileScreen() {
       sex: sex,
       fitzType: fitzType,
       DOB: DOB,
+      imageURL: imageURL,
     };
     console.log(newUserData);
     setUserInfo(newUserData);
     setEditMode(false);
+  };
+
+  const pickImage = async () => {
+    console.log("pick image");
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.cancelled) {
+      setImageURL(result.uri);
+    }
   };
 
   return (
@@ -78,10 +109,16 @@ export default function ProfileScreen() {
       </View>
 
       <View style={styles.header}>
-        <Image
-          style={styles.profileImage}
-          source={require("../assets/images/icon.png")}
-        />
+        <TouchableOpacity onPress={pickImage} disabled={!editMode}>
+          <Image
+            style={styles.profileImage}
+            source={
+              imageURL
+                ? { uri: imageURL }
+                : require("../assets/images/icon.png")
+            }
+          />
+        </TouchableOpacity>
         <TextInput
           style={styles.name}
           onChangeText={(name) => setName(name)}
@@ -98,7 +135,7 @@ export default function ProfileScreen() {
 
       <View style={styles.body}>
         <View style={styles.listContainer}>
-          <Text>Height (in):</Text>
+          <Text style={styles.labels}>Height (in):</Text>
           <TextInput
             style={
               editMode
@@ -113,7 +150,7 @@ export default function ProfileScreen() {
         </View>
 
         <View style={styles.listContainer}>
-          <Text>Weight (lb):</Text>
+          <Text style={styles.labels}>Weight (lb):</Text>
           <TextInput
             style={
               editMode
@@ -128,7 +165,7 @@ export default function ProfileScreen() {
         </View>
 
         <View style={styles.listContainer}>
-          <Text>Sex:</Text>
+          <Text style={styles.labels}>Sex:</Text>
           <RNPickerSelect
             style={editMode ? pickerSelectStylesEditMode : pickerSelectStyles}
             placeholder={{ label: "Not Set", value: null }}
@@ -144,7 +181,7 @@ export default function ProfileScreen() {
         </View>
 
         <View style={styles.listContainer}>
-          <Text>Date of Birth:</Text>
+          <Text style={styles.labels}>Date of Birth:</Text>
           <TextInput
             style={
               editMode
@@ -159,7 +196,7 @@ export default function ProfileScreen() {
         </View>
 
         <View style={styles.listContainer}>
-          <Text>FitzPatrick Skin Type:</Text>
+          <Text style={styles.labels}>FitzPatrick Skin Type:</Text>
           <RNPickerSelect
             style={editMode ? pickerSelectStylesEditMode : pickerSelectStyles}
             placeholder={{ label: "Not Set", value: null }}
@@ -216,6 +253,9 @@ const styles = StyleSheet.create({
   header: {
     alignItems: "center",
     backgroundColor: Colors.lightPurple,
+  },
+  labels: {
+    color: "#000000",
   },
   listContainer: {
     flexDirection: "row",
