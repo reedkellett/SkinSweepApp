@@ -7,6 +7,8 @@ import { Text, View } from "../components/Themed";
 import { profileInfo } from "../model/profileInfo";
 import { setUserInfo } from "../firebase/profile";
 import { auth, firestore } from "../firebase/firebaseSetUp";
+import Colors from "../constants/Colors";
+import { logout } from "../firebase/auth";
 
 const usersRef = firestore.collection("users");
 
@@ -42,6 +44,10 @@ export default function ProfileScreen() {
     }
   }, []);
 
+  const signOut = () => {
+    logout();
+  };
+
   const edit = () => {
     setEditMode(true);
   };
@@ -68,6 +74,7 @@ export default function ProfileScreen() {
           title={editMode ? "Done" : "Edit"}
           disabled={false}
         />
+        <Button title="Logout" onPress={signOut} />
       </View>
 
       <View style={styles.header}>
@@ -194,24 +201,27 @@ const pickerSelectStylesEditMode = StyleSheet.create({
 
 const styles = StyleSheet.create({
   body: {
-    //backgroundColor: "green",
+    backgroundColor: Colors.lightPurple,
   },
   buttonsContainer: {
     flexDirection: "row-reverse",
-    // justifyContent: "space-between",
-    //backgroundColor: "#F9C9C9",
+    justifyContent: "space-between",
+    backgroundColor: Colors.lightPurple,
   },
   container: {
+    flex: 1,
     flexDirection: "column",
+    backgroundColor: Colors.lightPurple,
   },
   header: {
-    //backgroundColor: "#F9C9C9",
     alignItems: "center",
+    backgroundColor: Colors.lightPurple,
   },
   listContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
     padding: "5%",
+    backgroundColor: Colors.lightPurple,
   },
   name: {
     fontSize: 22,
