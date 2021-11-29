@@ -14,6 +14,7 @@ type EntryProps = {
     confidence: number;
     notes: string;
     imgUrl: string;
+    photoId?: string,
   }
 
 export default function EntryPreview(props : EntryProps) {
@@ -26,21 +27,25 @@ export default function EntryPreview(props : EntryProps) {
             diagnosis: props.diagnosis,
             confidence: props.confidence,
             notes: props.notes,
-            imgUrl: props.imgUrl
+            imgUrl: props.imgUrl,
+            photoId: props.photoId
         }));
     }
 
     function handleDiagnosisColor(status: String){
-        switch(status.toLowerCase()) {
-            case 'safe':
-                return Colors.green;
-            case 'unsure':
-                return Colors.yellow;
-            case 'bad': 
-                return Colors.red;
-            default: 
-                return Colors.black;
+        if(status){
+            switch(status.toLowerCase()) {
+                case 'safe':
+                    return Colors.green;
+                case 'unsure':
+                    return Colors.yellow;
+                case 'bad': 
+                    return Colors.red;
+                default: 
+                    return Colors.black;
+            }
         }
+        return Colors.black;
     }
     return (
         <TouchableOpacity onPress={() => openEntry()}>

@@ -3,12 +3,41 @@ import { Button, StyleSheet } from "react-native";
 
 import { Text, View } from "../components/Themed";
 import { logout } from "../firebase/auth";
+import { Ionicons } from '@expo/vector-icons';
 
-import { useNavigation } from "@react-navigation/native";
-import { StackActions } from "@react-navigation/native";
+import { StackActions, useNavigation } from "@react-navigation/native";
+import { Camera } from 'expo-camera';
+import { useState } from "react";
+import { useEffect } from "react";
+import { TouchableOpacity } from "react-native";
+import { addUrlToDatabase, uploadImageAsync } from "../firebase/picture";
+import Colors from "../constants/Colors";
 
 export default function ScannerScreen() {
-  const navigation = useNavigation();
+  const navigation = useNavigation()
+  const [hasPermission, setHasPermission] = useState<boolean | null>(null);
+  const [type, setType] = useState(Camera.Constants.Type.back);
+  let camera: any = null;
+
+  useEffect(() => {
+    (async () => {
+      const { status } = await Camera.requestPermissionsAsync();
+      setHasPermission(status === 'granted');
+    })();
+  }, []);
+
+  const snap = async () => {
+    if (camera) {
+      let photo = await camera.takePictureAsync();
+      console.log(photo)
+      const id = Math.floor(Math.random() * 100).toString();
+      const time = new Date().toISOString()
+      uploadImageAsync(photo.uri, time)
+      addUrlToDatabase(time, id);
+      navigation.dispatch(StackActions.push('InputScreen', {entryId: id, photoId: time}));
+    }
+  };
+
 
   const signOut = () => {
     logout();
@@ -17,13 +46,28 @@ export default function ScannerScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Scanner</Text>
-      <View
-        style={styles.separator}
-        lightColor="#eee"
-        darkColor="rgba(255,255,255,0.1)"
-      />
-      <Button title="log out" onPress={signOut} />
+      <Camera style={styles.camera} type={type} ref={ref => { camera = ref;}}>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => {
+              setType(
+                type === Camera.Constants.Type.back
+                  ? Camera.Constants.Type.front
+                  : Camera.Constants.Type.back
+              );
+            }}>
+            <Ionicons name="camera-reverse-outline" size={24} color="black" />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.snap}
+            onPress={() => {
+              snap()
+            }}>
+            <Ionicons name="camera-outline" size={24} color="black" />
+          </TouchableOpacity>
+        </View>
+      </Camera>
     </View>
   );
 }
@@ -31,16 +75,32 @@ export default function ScannerScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
   },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
+  camera: {
+    flex: 1,
   },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
+  buttonContainer: {
+    flex: 1,
+    backgroundColor: 'transparent',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    margin: 20,
   },
+  button: {
+    flex: 0.1,
+    alignSelf: 'flex-end',
+    alignItems: 'center',
+  },
+  snap: {
+    width: 70,
+    height: 70,
+    borderWidth: 1,
+    borderRadius: 100,
+    borderColor: Colors.white,
+    opacity: 0.7,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: Colors.gray
+  }
 });

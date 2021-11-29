@@ -1,19 +1,24 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Colors from '../constants/Colors';
 import { View, Text, TouchableOpacity, TextInput, Image} from 'react-native'
 import { StyleSheet } from 'react-native';
 import { BackNavBar } from '../components/BackNavBar';
 import HeaderText from '../components/text/headerText';
+import { getImageUrl } from '../firebase/picture';
 
 export default function EntryScreen({route} : any) {
+    const [url, setUrl] = useState('')
     //get form feild values from previous screen
     const values = route.params;
-    console.log('test', values)
+    useEffect(() => {
+        getImageUrl(values.photoId).then(img => setUrl(img))
+      }, []);
+   
     return (
         <View style={styles.container}>
             <BackNavBar />
             <View style={styles.horizontal}>
-               <Image style={styles.img} source={{uri: values.imgUrl}}/>
+               <Image style={styles.img} source={{uri: url || values.imgUrl}}/>
                <View style={{flex: 1, flexDirection: 'column', marginLeft: 25}}>
                 <Text style={styles.top}> { values.name}  </Text>
                 <Text style={styles.top}>{ values.date} </Text>

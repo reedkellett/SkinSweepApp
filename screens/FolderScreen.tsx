@@ -13,8 +13,9 @@ import { getEntries } from "../firebase/dashboard";
 export default function FolderScreen({route} : any) {
   const [entries, setEntries] = useState<any[]>([]);
 
+  //breaking error somewhere
   useEffect(() => {
-    getEntries(route.params.logId).then(data => setEntries(data));
+    getEntries(route.params.logName).then(data => setEntries(data));
   }, []);
 
   const mostRecentImageUrl = route.params.imgUrl;
@@ -23,7 +24,7 @@ export default function FolderScreen({route} : any) {
       <BackNavBar/>
        <Image
           style={styles.img}
-          source={{uri: mostRecentImageUrl}}
+          source={{uri: mostRecentImageUrl || "" }}
         />
       <HeaderText style={styles.title} message={'Entries'}/>
       <View style={styles.box}>
@@ -33,18 +34,18 @@ export default function FolderScreen({route} : any) {
         </View>
         <FlatList
           style={styles.list}
-          data={entries}
+          data={entries || []}
           renderItem={({ item }) => 
           <EntryPreview 
-            key={item.id} 
-            id={item.id} 
-            date={item.date} 
-            name={item.name}
-            diagnosis={ item.diagnosis}
-            confidence={ item.confidence}
-            notes={item.notes}
-            imgUrl={item.imgUrl}
-            status={item.status}/>}
+            id={item.id || ""} 
+            date={item.date || ""} 
+            name={item.name || ""}
+            diagnosis={ item.diagnosis || ""}
+            confidence={ item.confidence || ""}
+            notes={item.notes || ""}
+            imgUrl={item.imgUrl || ""}
+            photoId={item.photoId || ""}
+            status={item.status || ""}/>}
         />
       </View>
     </View>
