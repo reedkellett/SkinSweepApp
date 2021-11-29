@@ -13,6 +13,8 @@ import Colors from "../constants/Colors";
 import { logout } from "../firebase/auth";
 
 const usersRef = firestore.collection("users");
+const addImageIcon =
+  "https://cdns.iconmonstr.com/wp-content/assets/preview/2018/240/iconmonstr-plus-circle-thin.png";
 
 export default function ProfileScreen() {
   const [name, setName] = useState("");
@@ -41,7 +43,7 @@ export default function ProfileScreen() {
             setSex(userData.sex || null);
             setFitzType(userData.fitzType || null);
             setDOB(userData.DOB || null);
-            setImageURL(userData.imageURL || null);
+            setImageURL(userData.imageURL || addImageIcon);
           }
         })
         .catch((error) => alert(error));
@@ -110,14 +112,7 @@ export default function ProfileScreen() {
 
       <View style={styles.header}>
         <TouchableOpacity onPress={pickImage} disabled={!editMode}>
-          <Image
-            style={styles.profileImage}
-            source={
-              imageURL
-                ? { uri: imageURL }
-                : require("../assets/images/icon.png")
-            }
-          />
+          <Image style={styles.profileImage} source={{ uri: imageURL }} />
         </TouchableOpacity>
         <TextInput
           style={styles.name}
@@ -274,7 +269,7 @@ const styles = StyleSheet.create({
   profileImage: {
     height: 100,
     width: 100,
-    //backgroundColor: "grey",
+    // backgroundColor: "#FFFFFF",
     borderRadius: 50,
   },
   secondaryUserInfo: {
