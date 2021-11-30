@@ -27,8 +27,8 @@ export type RootStackParamList = {
 };
 
 export type navRoute = {
-  params : any;
-}
+  params: any;
+};
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
   NativeStackScreenProps<RootStackParamList, Screen>;
@@ -40,28 +40,39 @@ export type RootTabParamList = {
 };
 
 export type PhotoLogEntry = {
-  id: string,
+  id: string;
   imgUrl: string;
   name: string;
 };
 
 export type Entry = {
-  id: string,
-  date: string,
-  imgUrl: string,
-  status: string,
-  name: string,
-  notes: string,
-  diagnosis: string,
-  confidence: number
-}
+  id: string;
+  date: string;
+  imgUrl: string;
+  status: string;
+  name: string;
+  notes: string;
+  diagnosis: string;
+  confidence: number;
+};
 
 export type Resource = {
-  id: string,
-  title: string,
-  imgUrl: string,
-  url: string
-}
+  id: string;
+  title: string;
+  imgUrl: string;
+  url: string;
+};
+
+export type ProfileInfo = {
+  fullName: string;
+  email: string;
+  height?: string;
+  weight?: string;
+  sex?: string;
+  DOB?: string;
+  fitzType?: string;
+  imageURL?: string;
+};
 
 export type RootTabScreenProps<Screen extends keyof RootTabParamList> =
   CompositeScreenProps<

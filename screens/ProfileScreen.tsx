@@ -6,11 +6,12 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 
 import { Text, View } from "../components/Themed";
 
-import { profileInfo } from "../model/profileInfo";
 import { setUserInfo } from "../firebase/profile";
 import { auth, firestore } from "../firebase/firebaseSetUp";
 import Colors from "../constants/Colors";
 import { logout } from "../firebase/auth";
+import { ProfileInfo } from "../types";
+import { getUserInfo } from "../firebase/profile";
 
 const usersRef = firestore.collection("users");
 const addImageIcon =
@@ -25,29 +26,19 @@ export default function ProfileScreen() {
   const [fitzType, setFitzType] = useState("");
   const [DOB, setDOB] = useState("");
   const [editMode, setEditMode] = useState(false);
-  const [imageURL, setImageURL] = useState("");
+  const [imageURL, setImageURL] = useState(addImageIcon);
 
   useEffect(() => {
-    let currentUser = auth.currentUser;
-    if (currentUser) {
-      usersRef
-        .doc(currentUser.uid)
-        .get()
-        .then((document) => {
-          const userData = document.data();
-          if (userData) {
-            setName(userData.fullName);
-            setEmail(userData.email);
-            setHeight(userData.height || null);
-            setWeight(userData.weight || null);
-            setSex(userData.sex || null);
-            setFitzType(userData.fitzType || null);
-            setDOB(userData.DOB || null);
-            setImageURL(userData.imageURL || addImageIcon);
-          }
-        })
-        .catch((error) => alert(error));
-    }
+    getUserInfo().then((userData) => {
+      setName(userData.fullName);
+      setEmail(userData.email);
+      setHeight(userData.height || "");
+      setWeight(userData.weight || "");
+      setSex(userData.sex || "");
+      setFitzType(userData.fitzType || "");
+      setDOB(userData.DOB || "");
+      setImageURL(userData.imageURL || addImageIcon);
+    });
 
     (async () => {
       if (Platform.OS !== "web") {
@@ -68,7 +59,7 @@ export default function ProfileScreen() {
     setEditMode(true);
   };
   const done = () => {
-    let newUserData: profileInfo = {
+    let newUserData: ProfileInfo = {
       fullName: name,
       email: email,
       height: height,
