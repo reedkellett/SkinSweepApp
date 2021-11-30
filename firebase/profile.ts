@@ -1,32 +1,37 @@
 import { auth, firestore } from "./firebaseSetUp";
-import { profileInfo } from "../model/profileInfo";
+import { ProfileInfo } from "../types";
 
 const usersRef = firestore.collection("users");
 
-// This is done in profilescreen use effect
-// export const getUserInfo = () => {
-//   let currentUser = auth.currentUser;
-//   var userInfo: profileInfo = {};
-//   if (currentUser) {
-//     usersRef
-//       .doc(currentUser.uid)
-//       .get()
-//       .then((document) => {
-//         const userData = document.data();
-//         if (userData) {
-//           userInfo = userData;
-//         }
-//       })
-//       .catch((error) => alert(error));
-//   } else {
-//     throw new Error("current user not found");
-//   }
-//   return userInfo;
-//   // return happens before firebase call
-// };
+export const getUserInfo = async (): Promise<ProfileInfo> => {
+  const currentUser = auth.currentUser;
+  let userData: ProfileInfo = { fullName: "", email: "" };
 
-export const setUserInfo = (userData: profileInfo) => {
-  let currentUser = auth.currentUser;
+  if (currentUser) {
+    await usersRef
+      .doc(currentUser.uid)
+      .get()
+      .then((document) => {
+        const documentData = document.data();
+        if (documentData) {
+          userData.fullName = documentData.fullName;
+          userData.email = documentData.email;
+          userData.height = documentData.height;
+          userData.weight = documentData.weight;
+          userData.sex = documentData.sex;
+          userData.fitzType = documentData.fitzType;
+          userData.DOB = documentData.DOB;
+          userData.imageURL = documentData.imageURL;
+        }
+      })
+      .catch((error) => alert(error));
+  }
+
+  return userData;
+};
+
+export const setUserInfo = (userData: ProfileInfo) => {
+  const currentUser = auth.currentUser;
   if (currentUser) {
     usersRef
       .doc(currentUser.uid)
