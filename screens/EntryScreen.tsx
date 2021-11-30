@@ -1,37 +1,42 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Colors from '../constants/Colors';
 import { View, Text, TouchableOpacity, TextInput, Image} from 'react-native'
 import { StyleSheet } from 'react-native';
 import { BackNavBar } from '../components/BackNavBar';
 import HeaderText from '../components/text/headerText';
+import { getImageUrl } from '../firebase/picture';
 
 export default function EntryScreen({route} : any) {
+    const [url, setUrl] = useState('')
     //get form feild values from previous screen
     const values = route.params;
-    console.log('test', values)
+    useEffect(() => {
+        getImageUrl(values.photoId).then(img => setUrl(img))
+      }, []);
+   
     return (
         <View style={styles.container}>
             <BackNavBar />
             <View style={styles.horizontal}>
-               <Image style={styles.img} source={{uri: values.imgUrl}}/>
+               <Image style={styles.img} source={{uri: url }}/>
                <View style={{flex: 1, flexDirection: 'column', marginLeft: 25}}>
-                <Text style={styles.top}> { values.name}  </Text>
-                <Text style={styles.top}>{ values.date} </Text>
+                <View style={styles.top}><Text>{values.name}</Text></View>
+                <View style={styles.top}><Text>{values.date} </Text></View>
                </View>
             </View>
             <View style={styles.info}>
                 <View style={styles.diagnosis}>
                     <HeaderText style={{paddingLeft: 10, marginBottom: 5}} message={'Diagnosis'} />
-                    <Text style={styles.diagnosisText}>{values.diagnosis}</Text>
+                    <View style={styles.diagnosisText}><Text style={{paddingTop: 10}}>{values.diagnosis}</Text></View>
                 </View>
                 <View style={styles.confidence}>
                     <HeaderText  style={{paddingLeft: 8, marginBottom: 5}} message={'Confidence'} size={12} />
-                    <Text style={styles.confidenceText}>{values.confidence + "%"}</Text>
+                    <View style={styles.confidenceText}><Text>{values.confidence ? values.confidence + "%" : 'N/A'}</Text></View>
                 </View>
             </View>
             <View style={styles.notes}>
                     <HeaderText style={{paddingLeft: 10, marginBottom: 5}} message={'Additional Notes'} />
-                    <Text style={styles.diagnosisText}>{values.notes}</Text>
+                    <View style={styles.diagnosisText}><Text style={{paddingTop: 10}}>{values.notes}</Text></View>
                 </View>
             <View style={styles.horizontal}></View>
         </View>
@@ -47,15 +52,15 @@ const styles = StyleSheet.create({
       backgroundColor: Colors.lightPurple,
     },
     top: {
-        backgroundColor: Colors.white,
+        height: 30,
+        width: '75%',
         borderRadius: 15,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        height: 30,
-        width: '75%',
         margin: 5,
-        paddingLeft: 10
+        paddingLeft: 10,
+        backgroundColor: Colors.white,
     },
     horizontal: {
         flex: 1,
@@ -106,6 +111,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     }, 
     notes: {
+        marginTop: 10,
         height: '25%',
         width: '90%',
     }

@@ -16,6 +16,7 @@ export const getPhotolog = async():Promise<PhotoLogEntry[]> => {
                 id: doc.id,
                 imgUrl: doc.data().imgUrl,
                 name: doc.data().name,
+                photoId: doc.data().photoId
             }
             photoData.push(convertedData);
         });
@@ -29,19 +30,19 @@ export const getPhotolog = async():Promise<PhotoLogEntry[]> => {
 
   const entriesRef = firestore.collection("entries");
 
-  export const getEntries = async(id: string) => {
+  export const getEntries = async(name: string) => {
     let entries: any[] = [];
     await entriesRef
-    .where('logId', '==', id)
+    .where('logName', '==', name)
+    .orderBy('photoId', 'desc')
     .get()
     .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
             // doc.data() is never undefined for query doc snapshots
-            console.log(doc.id, " => ", doc.data());
             let entryData: Entry = {
                 id: doc.id,
                 date: doc.data().date,
-                imgUrl: doc.data().imgUrl,
+                photoId: doc.data().photoId,
                 status: doc.data().status,
                 name: doc.data().name,
                 notes: doc.data().notes,
@@ -67,7 +68,6 @@ export const getPhotolog = async():Promise<PhotoLogEntry[]> => {
     .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
             // doc.data() is never undefined for query doc snapshots
-            console.log(doc.id, " => ", doc.data());
             let resourceData: Resource = {
                 id: doc.id,
                 title: doc.data().title,

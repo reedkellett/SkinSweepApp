@@ -32,6 +32,7 @@ import Login from "../screens/Login";
 import EntryScreen from "../screens/EntryScreen";
 import FolderScreen from "../screens/FolderScreen";
 import { auth } from "../firebase/firebaseSetUp";
+import InputScreen from "../screens/InputScreen";
 
 export default function Navigation() {
   return (
@@ -70,6 +71,7 @@ function RootNavigator() {
       />
       <Stack.Screen name="EntryScreen" component={EntryScreen} />
       <Stack.Screen name="FolderScreen" component={FolderScreen} />
+      <Stack.Screen name="InputScreen" component={InputScreen} />
     </Stack.Navigator>
   ) : (
     <Stack.Navigator

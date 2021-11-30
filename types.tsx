@@ -24,6 +24,7 @@ export type RootStackParamList = {
   SignUp: undefined;
   EntryScreen: undefined;
   FolderScreen: undefined;
+  InputScreen: undefined;
 };
 
 export type navRoute = {
@@ -40,21 +41,21 @@ export type RootTabParamList = {
 };
 
 export type PhotoLogEntry = {
-  id: string;
-  imgUrl: string;
+  id: string,
   name: string;
+  photoId: string;
 };
 
 export type Entry = {
-  id: string;
-  date: string;
-  imgUrl: string;
-  status: string;
-  name: string;
-  notes: string;
-  diagnosis: string;
-  confidence: number;
-};
+  id: string,
+  date: string,
+  photoId: string,
+  status: string,
+  name: string,
+  notes: string,
+  diagnosis: string,
+  confidence: number
+}
 
 export type Resource = {
   id: string;

@@ -1,29 +1,36 @@
 import { AntDesign } from "@expo/vector-icons";
 import { StackActions, useNavigation } from "@react-navigation/native";
-import React from "react";
+import React, { useEffect } from "react";
+import { useState } from "react";
 import { View, Image, Text, StyleSheet } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Colors from "../constants/Colors";
+import { getImageUrl } from "../firebase/picture";
 
 type FolderProps = {
   id: string;
-  imgUrl: string;
   title: string;
+  photoId: string;
 }
 
 export default function FolderPreview(props: FolderProps) {
+  const [url, setUrl] = useState('')
   const navigation = useNavigation()
   const openFolder = () => {
     console.log("open Folder pressed");
-    navigation.dispatch(StackActions.push('FolderScreen', {logId: props.id, imgUrl: props.imgUrl}));
+    navigation.dispatch(StackActions.push('FolderScreen', {logId: props.id,logName: props.title, imgUrl: url}));
   };
+
+  useEffect(() => {
+    getImageUrl(props.photoId).then(img => setUrl(img))
+  }, []);
 
   return (
     <TouchableOpacity onPress={() => openFolder()}>
       <View style={ styles.container }>
         <Image
           style={styles.img}
-          source={{uri: props.imgUrl}}
+          source={{uri: url }}
         />
          <Text style={styles.title}>{props.title}</Text>
          <AntDesign style={styles.arrow} name="arrowright" size={18} color="gray" />
