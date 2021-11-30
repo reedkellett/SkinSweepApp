@@ -7,13 +7,11 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { Text, View } from "../components/Themed";
 
 import { setUserInfo } from "../firebase/profile";
-import { auth, firestore } from "../firebase/firebaseSetUp";
 import Colors from "../constants/Colors";
 import { logout } from "../firebase/auth";
 import { ProfileInfo } from "../types";
 import { getUserInfo } from "../firebase/profile";
 
-const usersRef = firestore.collection("users");
 const addImageIcon =
   "https://cdns.iconmonstr.com/wp-content/assets/preview/2018/240/iconmonstr-plus-circle-thin.png";
 
