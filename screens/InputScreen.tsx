@@ -44,12 +44,14 @@ export default function InputScreen({route} : any) {
                 placeholder={'Additional Notes...'}
                 placeholderTextColor={'#2E2424'}
                 value={notes}
+                blurOnSubmit={true}
+                returnKeyType={'done'}
                 />
-            <View style={ styles.submit }>
-                <TouchableOpacity onPress={submit}>
+            <TouchableOpacity onPress={() => submit()}>
+                <View style={ styles.submit }>
                     <Text style={{color: Colors.white, fontWeight: 'bold'}}> Submit </Text>
-                </TouchableOpacity>
-            </View>
+                </View>
+            </TouchableOpacity>
         </View>
     )
 }
@@ -88,7 +90,7 @@ const styles =  StyleSheet.create({
       },
     submit: {
         backgroundColor: Colors.purple,
-        width: "50%",
+        width: 120,
         height: 35,
         borderColor: Colors.white,
         borderWidth: 1,
