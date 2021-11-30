@@ -13,8 +13,7 @@ type EntryProps = {
     diagnosis: string;
     confidence: number;
     notes: string;
-    imgUrl: string;
-    photoId?: string,
+    photoId: string,
   }
 
 export default function EntryPreview(props : EntryProps) {
@@ -27,7 +26,6 @@ export default function EntryPreview(props : EntryProps) {
             diagnosis: props.diagnosis,
             confidence: props.confidence,
             notes: props.notes,
-            imgUrl: props.imgUrl,
             photoId: props.photoId
         }));
     }

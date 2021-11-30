@@ -9,9 +9,8 @@ import { getImageUrl } from "../firebase/picture";
 
 type FolderProps = {
   id: string;
-  imgUrl: string;
   title: string;
-  photoId?: string
+  photoId: string;
 }
 
 export default function FolderPreview(props: FolderProps) {
@@ -19,7 +18,7 @@ export default function FolderPreview(props: FolderProps) {
   const navigation = useNavigation()
   const openFolder = () => {
     console.log("open Folder pressed");
-    navigation.dispatch(StackActions.push('FolderScreen', {logId: props.id,logName: props.title, imgUrl: url || props.imgUrl}));
+    navigation.dispatch(StackActions.push('FolderScreen', {logId: props.id,logName: props.title, imgUrl: url}));
   };
 
   useEffect(() => {
@@ -31,7 +30,7 @@ export default function FolderPreview(props: FolderProps) {
       <View style={ styles.container }>
         <Image
           style={styles.img}
-          source={{uri: url || props.imgUrl}}
+          source={{uri: url }}
         />
          <Text style={styles.title}>{props.title}</Text>
          <AntDesign style={styles.arrow} name="arrowright" size={18} color="gray" />

@@ -42,7 +42,6 @@ export const getPhotolog = async():Promise<PhotoLogEntry[]> => {
             let entryData: Entry = {
                 id: doc.id,
                 date: doc.data().date,
-                imgUrl: doc.data().imgUrl,
                 photoId: doc.data().photoId,
                 status: doc.data().status,
                 name: doc.data().name,

@@ -24,7 +24,7 @@ export default function FolderScreen({route} : any) {
       <BackNavBar/>
        <Image
           style={styles.img}
-          source={{uri: mostRecentImageUrl || "" }}
+          source={{uri: mostRecentImageUrl }}
         />
       <HeaderText style={styles.title} message={'Entries'}/>
       <View style={styles.box}>
@@ -37,15 +37,14 @@ export default function FolderScreen({route} : any) {
           data={entries || []}
           renderItem={({ item }) => 
           <EntryPreview 
-            id={item.id || ""} 
-            date={item.date || ""} 
-            name={item.name || ""}
-            diagnosis={ item.diagnosis || ""}
-            confidence={ item.confidence || ""}
-            notes={item.notes || ""}
-            imgUrl={item.imgUrl || ""}
-            photoId={item.photoId || ""}
-            status={item.status || ""}/>}
+            id={item.id} 
+            date={item.date} 
+            name={item.name}
+            diagnosis={ item.diagnosis}
+            confidence={ item.confidence}
+            notes={item.notes}
+            photoId={item.photoId}
+            status={item.status}/>}
         />
       </View>
     </View>

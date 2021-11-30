@@ -47,7 +47,8 @@ export async function addDataToEntry(entryId: string, photoId: string, logName: 
         date: new Date().toISOString().split("T")[0],
         notes: notes,
         logName: logName,
-        status: 'unsure'
+        status: 'unsure',
+        diagnosis: 'Processing'
     })
 }
 

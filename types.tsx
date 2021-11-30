@@ -42,16 +42,14 @@ export type RootTabParamList = {
 
 export type PhotoLogEntry = {
   id: string,
-  imgUrl: string;
   name: string;
-  photoId?: string;
+  photoId: string;
 };
 
 export type Entry = {
   id: string,
   date: string,
-  imgUrl: string,
-  photoId?: string,
+  photoId: string,
   status: string,
   name: string,
   notes: string,

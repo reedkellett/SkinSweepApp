@@ -34,7 +34,6 @@ export default function DashboardScreen() {
               key={item.id}
               id={item.id}
               title={item.name}
-              imgUrl={item.imgUrl}
               photoId={item.photoId}
             />
           )}

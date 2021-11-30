@@ -18,10 +18,10 @@ export default function EntryScreen({route} : any) {
         <View style={styles.container}>
             <BackNavBar />
             <View style={styles.horizontal}>
-               <Image style={styles.img} source={{uri: url || values.imgUrl}}/>
+               <Image style={styles.img} source={{uri: url }}/>
                <View style={{flex: 1, flexDirection: 'column', marginLeft: 25}}>
-                <Text style={styles.top}> { values.name}  </Text>
-                <Text style={styles.top}>{ values.date} </Text>
+                <Text style={styles.top}> {values.name}  </Text>
+                <Text style={styles.top}>{values.date} </Text>
                </View>
             </View>
             <View style={styles.info}>
@@ -31,7 +31,7 @@ export default function EntryScreen({route} : any) {
                 </View>
                 <View style={styles.confidence}>
                     <HeaderText  style={{paddingLeft: 8, marginBottom: 5}} message={'Confidence'} size={12} />
-                    <Text style={styles.confidenceText}>{values.confidence + "%"}</Text>
+                    <Text style={styles.confidenceText}>{values.confidence ? values.confidence + "%" : 'N/A'}</Text>
                 </View>
             </View>
             <View style={styles.notes}>

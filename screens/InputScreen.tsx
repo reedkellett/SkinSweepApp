@@ -26,23 +26,25 @@ export default function InputScreen({route} : any) {
              <TextInput
                 style={styles.input}
                 onChangeText={onChangeLog}
-                placeholder={'Log Name...'}
-                placeholderTextColor={Colors.gray}
+                placeholder={'Photo Log Name...'}
+                placeholderTextColor={'#2E2424'}
                 value={logName}
                 />
              <TextInput
                 style={styles.input}
                 onChangeText={onChangeText}
-                placeholder={'Title...'}
-                placeholderTextColor={Colors.gray}
+                placeholder={'Entry Title...'}
+                placeholderTextColor={'#2E2424'}
                 value={titleText}
                 />
             <TextInput
-            style={styles.notes}
-            onChangeText={onChangeNotes}
-            placeholder={'Notes...'}
-            value={notes}
-            />
+                style={styles.notes}
+                onChangeText={onChangeNotes}
+                multiline={true}
+                placeholder={'Additional Notes...'}
+                placeholderTextColor={'#2E2424'}
+                value={notes}
+                />
             <View style={ styles.submit }>
                 <TouchableOpacity onPress={submit}>
                     <Text style={{color: Colors.white, fontWeight: 'bold'}}> Submit </Text>
@@ -80,8 +82,9 @@ const styles =  StyleSheet.create({
         width: "70%",
         height: 120,
         marginBottom: 20,
-        alignItems: "center",
         paddingLeft: 20,
+        paddingTop: 15,
+        textAlignVertical: "top"
       },
     submit: {
         backgroundColor: Colors.purple,
