@@ -101,7 +101,10 @@ export default function ProfileScreen() {
 
       <View style={styles.header}>
         <TouchableOpacity onPress={pickImage} disabled={!editMode}>
-          <Image style={styles.profileImage} source={{ uri: imageURL }} />
+          <Image
+            style={editMode ? styles.profileImageEditMode : styles.profileImage}
+            source={{ uri: imageURL }}
+          />
         </TouchableOpacity>
         <TextInput
           style={styles.name}
@@ -261,11 +264,22 @@ const styles = StyleSheet.create({
     // backgroundColor: "#FFFFFF",
     borderRadius: 50,
   },
+  profileImageEditMode: {
+    height: 100,
+    width: 100,
+    // backgroundColor: "#FFFFFF",
+    borderRadius: 50,
+    borderColor: "blue",
+    borderWidth: 1,
+    opacity: 0.5,
+  },
   secondaryUserInfo: {
     color: "black",
   },
   secondaryUserInfoEditMode: {
+    backgroundColor: "white",
     color: "blue",
+    width: 80,
   },
   separator: {
     marginVertical: 30,
