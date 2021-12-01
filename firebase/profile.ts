@@ -1,5 +1,6 @@
-import { auth, firestore } from "./firebaseSetUp";
+import { auth, firestore, fireStorage } from "./firebaseSetUp";
 import { ProfileInfo } from "../types";
+import { Platform } from "react-native";
 
 const usersRef = firestore.collection("users");
 
@@ -11,7 +12,7 @@ export const getUserInfo = async (): Promise<ProfileInfo> => {
     await usersRef
       .doc(currentUser.uid)
       .get()
-      .then((document) => {
+      .then(async (document) => {
         const documentData = document.data();
         if (documentData) {
           userData.fullName = documentData.fullName;
@@ -21,19 +22,61 @@ export const getUserInfo = async (): Promise<ProfileInfo> => {
           userData.sex = documentData.sex;
           userData.fitzType = documentData.fitzType;
           userData.DOB = documentData.DOB;
-          userData.imageURL = documentData.imageURL;
+          if (documentData.imageURL) {
+            let imageRef = fireStorage.ref("profile" + currentUser.uid);
+            await imageRef
+              .getDownloadURL()
+              .then((url) => {
+                userData.imageURL = url;
+              })
+              .catch((error) => alert(error));
+          }
         }
       })
       .catch((error) => alert(error));
   }
-
   return userData;
 };
 
-export const setUserInfo = (userData: ProfileInfo) => {
+export const setUserInfo = async (userData: ProfileInfo) => {
   const currentUser = auth.currentUser;
   if (currentUser) {
-    usersRef
+    // handle profile image
+    if (userData.imageURL) {
+      let imageName = "profile" + currentUser.uid;
+      let uploadUri =
+        Platform.OS === "ios"
+          ? userData.imageURL.replace("file://", "")
+          : userData.imageURL;
+
+      // delete image
+      await fireStorage
+        .ref(imageName)
+        .delete()
+        .catch((error) => console.log("delete failed"));
+
+      // add image
+      const blob: any = await new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        xhr.onload = function () {
+          resolve(xhr.response);
+        };
+        xhr.onerror = function (e) {
+          console.log(e);
+          reject(new TypeError("Network request failed"));
+        };
+        xhr.responseType = "blob";
+        xhr.open("GET", uploadUri, true);
+        xhr.send(null);
+      });
+      await fireStorage
+        .ref(imageName)
+        .put(blob)
+        .catch((error) => alert(error));
+    }
+
+    // set data
+    await usersRef
       .doc(currentUser.uid)
       .set(userData)
       .catch((error) => alert(error));
