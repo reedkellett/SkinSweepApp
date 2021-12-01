@@ -29,7 +29,7 @@ export const getUserInfo = async (): Promise<ProfileInfo> => {
               .then((url) => {
                 userData.imageURL = url;
               })
-              .catch((error) => alert(error));
+              .catch((error) => console.log("image download failed"));
           }
         }
       })
